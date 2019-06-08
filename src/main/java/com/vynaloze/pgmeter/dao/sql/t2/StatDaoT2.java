@@ -3,7 +3,7 @@ package com.vynaloze.pgmeter.dao.sql.t2;
 import com.vynaloze.pgmeter.dao.sql.StatDao;
 import com.vynaloze.pgmeter.dto.StatDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,11 @@ public class StatDaoT2 implements StatDao {
     @Transactional
     public void save(final StatDto statDto) {
         final var stat = Converter.toStat(statDto);
+        Integer dsId;
         try {
+            dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
+        } catch (final IncorrectResultSizeDataAccessException e) {
+            // means there is no such datasource in the database yet
             final var insertDs = "insert into datasources (ip, hostname, port, database, tags) values (:ip, :hostname, :port, :database, :tags)";
             final var params = new HashMap<String, Object>();
             params.put("ip", stat.getDatasource().getIp());
@@ -34,10 +38,8 @@ public class StatDaoT2 implements StatDao {
             params.put("database", stat.getDatasource().getDatabase());
             params.put("tags", stat.getDatasource().getTags());
             jdbcTemplate.update(insertDs, params);
-        } catch (DuplicateKeyException e) {
-            // do nothing
+            dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
         }
-        final var dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
         final var insertStat = "insert into stats (timestamp, datasource_id, type, payload) values (:timestamp, :datasource_id, :type, :payload)";
         final var params = new HashMap<String, Object>();
         params.put("timestamp", stat.getTimestamp());
