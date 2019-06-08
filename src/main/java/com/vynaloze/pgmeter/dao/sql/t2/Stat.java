@@ -5,15 +5,15 @@ import org.springframework.lang.NonNull;
 
 public class Stat {
     @NonNull
-    private Long id;
+    private final Long id;
     @NonNull
-    private Long timestamp;
+    private final Long timestamp;
     @NonNull
-    private Datasource datasource;
+    private final Datasource datasource;
     @NonNull
-    private String type;
+    private final String type;
     @NonNull
-    private String payload;
+    private final String payload;
 
     public Stat(@NonNull final Long id, @NonNull final Long timestamp, @NonNull final Datasource datasource,
                 @NonNull final String type, @NonNull final String payload) {
@@ -29,17 +29,9 @@ public class Stat {
         return id;
     }
 
-    public void setId(@NonNull final Long id) {
-        this.id = id;
-    }
-
     @NonNull
     public Long getTimestamp() {
         return timestamp;
-    }
-
-    public void setTimestamp(@NonNull final Long timestamp) {
-        this.timestamp = timestamp;
     }
 
     @NonNull
@@ -47,26 +39,14 @@ public class Stat {
         return datasource;
     }
 
-    public void setDatasource(@NonNull final Datasource datasource) {
-        this.datasource = datasource;
-    }
-
     @NonNull
     public String getType() {
         return type;
     }
 
-    public void setType(@NonNull final String type) {
-        this.type = type;
-    }
-
     @NonNull
     public String getPayload() {
         return payload;
-    }
-
-    public void setPayload(@NonNull final String payload) {
-        this.payload = payload;
     }
 
     @Override

@@ -5,17 +5,17 @@ import org.springframework.lang.Nullable;
 
 public class Datasource {
     @NonNull
-    private Long id;
+    private final Long id;
     @NonNull
-    private String ip;
+    private final String ip;
     @Nullable
-    private String hostname;
+    private final String hostname;
     @Nullable
-    private Integer port;
+    private final Integer port;
     @NonNull
-    private String database;
+    private final String database;
     @Nullable
-    private String tags;
+    private final String tags;
 
     public Datasource(@NonNull final Long id, @NonNull final String ip, @Nullable final String hostname,
                       @Nullable final Integer port, @NonNull final String database, @Nullable final String tags) {
@@ -32,17 +32,9 @@ public class Datasource {
         return id;
     }
 
-    public void setId(@NonNull final Long id) {
-        this.id = id;
-    }
-
     @NonNull
     public String getIp() {
         return ip;
-    }
-
-    public void setIp(@NonNull final String ip) {
-        this.ip = ip;
     }
 
     @Nullable
@@ -50,17 +42,9 @@ public class Datasource {
         return hostname;
     }
 
-    public void setHostname(@Nullable final String hostname) {
-        this.hostname = hostname;
-    }
-
     @Nullable
     public Integer getPort() {
         return port;
-    }
-
-    public void setPort(@Nullable final Integer port) {
-        this.port = port;
     }
 
     @NonNull
@@ -68,17 +52,9 @@ public class Datasource {
         return database;
     }
 
-    public void setDatabase(@NonNull final String database) {
-        this.database = database;
-    }
-
     @Nullable
     public String getTags() {
         return tags;
-    }
-
-    public void setTags(@Nullable final String tags) {
-        this.tags = tags;
     }
 
     @Override

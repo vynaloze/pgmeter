@@ -7,17 +7,17 @@ import java.util.Map;
 
 public class DatasourceDto {
     @Nullable
-    private Long id;
+    private final Long id;
     @NonNull
-    private String ip;
+    private final String ip;
     @Nullable
-    private String hostname;
+    private final String hostname;
     @Nullable
-    private Integer port;
+    private final Integer port;
     @Nullable
-    private String database;
+    private final String database;
     @Nullable
-    private Map<String, String> tags;
+    private final Map<String, String> tags;
 
     public DatasourceDto(@Nullable final Long id, @NonNull final String ip, @Nullable final String hostname,
                          @Nullable final Integer port, @Nullable final String database, @Nullable final Map<String, String> tags) {
@@ -34,17 +34,9 @@ public class DatasourceDto {
         return id;
     }
 
-    public void setId(@Nullable final Long id) {
-        this.id = id;
-    }
-
     @NonNull
     public String getIp() {
         return ip;
-    }
-
-    public void setIp(@NonNull final String ip) {
-        this.ip = ip;
     }
 
     @Nullable
@@ -52,17 +44,9 @@ public class DatasourceDto {
         return hostname;
     }
 
-    public void setHostname(@Nullable final String hostname) {
-        this.hostname = hostname;
-    }
-
     @Nullable
     public Integer getPort() {
         return port;
-    }
-
-    public void setPort(@Nullable final Integer port) {
-        this.port = port;
     }
 
     @Nullable
@@ -70,18 +54,11 @@ public class DatasourceDto {
         return database;
     }
 
-    public void setDatabase(@Nullable final String database) {
-        this.database = database;
-    }
-
     @Nullable
     public Map<String, String> getTags() {
         return tags;
     }
 
-    public void setTags(@Nullable final Map<String, String> tags) {
-        this.tags = tags;
-    }
 
     @Override
     public boolean equals(final Object o) {
@@ -94,7 +71,7 @@ public class DatasourceDto {
 
         final DatasourceDto that = (DatasourceDto) o;
 
-        if (!id.equals(that.id)) {
+        if (id != null ? !id.equals(that.id) : that.id != null) {
             return false;
         }
         if (!ip.equals(that.ip)) {
@@ -106,7 +83,7 @@ public class DatasourceDto {
         if (port != null ? !port.equals(that.port) : that.port != null) {
             return false;
         }
-        if (!database.equals(that.database)) {
+        if (database != null ? !database.equals(that.database) : that.database != null) {
             return false;
         }
         return tags != null ? tags.equals(that.tags) : that.tags == null;
@@ -114,11 +91,11 @@ public class DatasourceDto {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + ip.hashCode();
         result = 31 * result + (hostname != null ? hostname.hashCode() : 0);
         result = 31 * result + (port != null ? port.hashCode() : 0);
-        result = 31 * result + database.hashCode();
+        result = 31 * result + (database != null ? database.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         return result;
     }

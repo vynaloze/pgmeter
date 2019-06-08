@@ -4,19 +4,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vynaloze.pgmeter.json.Parser;
 import org.springframework.lang.NonNull;
 
+import java.util.List;
 import java.util.Map;
 
 public class StatDto {
     @NonNull
-    private Long timestamp;
+    private final Long timestamp;
     @NonNull
-    private DatasourceDto datasource;
+    private final DatasourceDto datasource;
     @NonNull
-    private String id;
+    private final String id;
     @NonNull
-    private Map<String, Object> payload;
+    private final List<Map<String, Object>> payload;
 
-    public StatDto(@NonNull final Long timestamp, @NonNull final DatasourceDto datasource, @NonNull final String id, @NonNull final Map<String, Object> payload) {
+    public StatDto(@NonNull final Long timestamp, @NonNull final DatasourceDto datasource, @NonNull final String id, @NonNull final List<Map<String, Object>> payload) {
         this.timestamp = timestamp;
         this.datasource = datasource;
         this.id = id;
@@ -28,17 +29,9 @@ public class StatDto {
         return timestamp;
     }
 
-    public void setTimestamp(@NonNull final Long timestamp) {
-        this.timestamp = timestamp;
-    }
-
     @NonNull
     public DatasourceDto getDatasource() {
         return datasource;
-    }
-
-    public void setDatasource(@NonNull final DatasourceDto datasource) {
-        this.datasource = datasource;
     }
 
     @NonNull
@@ -46,17 +39,9 @@ public class StatDto {
         return id;
     }
 
-    public void setId(@NonNull final String id) {
-        this.id = id;
-    }
-
     @NonNull
-    public Map<String, Object> getPayload() {
+    public List<Map<String, Object>> getPayload() {
         return payload;
-    }
-
-    public void setPayload(@NonNull final Map<String, Object> payload) {
-        this.payload = payload;
     }
 
     @Override
