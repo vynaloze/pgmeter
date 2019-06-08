@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Initial -->
+    <changeSet author="vynaloze" id="1">
+        <createTable tableName="datasources">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="ip" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hostname" type="VARCHAR"/>
+            <column name="port" type="INT"/>
+            <column name="database" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tags" type="VARCHAR"/>
+        </createTable>
+
+        <createIndex tableName="datasources" indexName="idx_pk_datasources" unique="true">
+            <column name="id"/>
+        </createIndex>
+
+        <addUniqueConstraint tableName="datasources" columnNames="ip,database"/>
+
+        <createTable tableName="stats">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="timestamp" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="datasource_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_ds_stats" references="datasources(id)"/>
+            </column>
+            <column name="type" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payload" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="stats" indexName="idx_pk_stats" unique="true">
+            <column name="id"/>
+        </createIndex>
+
+        <createIndex tableName="stats" indexName="idx_fk_ds_stats" unique="false">
+            <column name="datasource_id"/>
+        </createIndex>
+
+        <createIndex tableName="stats" indexName="idx_stats_ts" unique="false">
+            <column name="timestamp"/>
+        </createIndex>
+
+        <createIndex tableName="stats" indexName="idx_stats_ts_name" unique="false">
+            <column name="timestamp"/>
+            <column name="type"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>
