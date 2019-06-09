@@ -30,15 +30,22 @@ public class StatDaoT2 implements StatDao {
             dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
         } catch (final IncorrectResultSizeDataAccessException e) {
             // means there is no such datasource in the database yet
-            final var insertDs = "insert into datasources (ip, hostname, port, database, tags) values (:ip, :hostname, :port, :database, :tags)";
-            final var params = new HashMap<String, Object>();
-            params.put("ip", stat.getDatasource().getIp());
-            params.put("hostname", stat.getDatasource().getHostname());
-            params.put("port", stat.getDatasource().getPort());
-            params.put("database", stat.getDatasource().getDatabase());
-            params.put("tags", stat.getDatasource().getTags());
-            jdbcTemplate.update(insertDs, params);
-            dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
+            synchronized (this) {
+                // once more, this time synchronized
+                try {
+                    dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
+                } catch (final IncorrectResultSizeDataAccessException e2) {
+                    final var insertDs = "insert into datasources (ip, hostname, port, database, tags) values (:ip, :hostname, :port, :database, :tags)";
+                    final var params = new HashMap<String, Object>();
+                    params.put("ip", stat.getDatasource().getIp());
+                    params.put("hostname", stat.getDatasource().getHostname());
+                    params.put("port", stat.getDatasource().getPort());
+                    params.put("database", stat.getDatasource().getDatabase());
+                    params.put("tags", stat.getDatasource().getTags());
+                    jdbcTemplate.update(insertDs, params);
+                    dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
+                }
+            }
         }
         final var insertStat = "insert into stats (timestamp, datasource_id, type, payload) values (:timestamp, :datasource_id, :type, :payload)";
         final var params = new HashMap<String, Object>();
