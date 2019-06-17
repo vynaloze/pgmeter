@@ -1,11 +1,14 @@
 package com.vynaloze.pgmeter.dao.sql;
 
+import com.vynaloze.pgmeter.dto.DatasourceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class DatasourceDao {
@@ -46,5 +49,16 @@ public class DatasourceDao {
         params.put("ip", ip);
         params.put("database", database);
         return jdbcTemplate.queryForObject(getDsId, params, Integer.class);
+    }
+
+    public List<DatasourceDto> getDatasources(final Long tsFrom, final Long tsTo) {
+        final var query = "select distinct d.id as did, d.ip as ip, d.hostname as hostname, d.port as port, d.database as database, d.tags as tags " +
+                "from stats s join datasources d on s.datasource_id = d.id " +
+                "where s.timestamp > :tsFrom and s.timestamp <= :tsTo";
+        final var params = new HashMap<String, Object>();
+        params.put("tsFrom", tsFrom);
+        params.put("tsTo", tsTo);
+        final var list = jdbcTemplate.query(query, params, new DatasourceRowMapper());
+        return list.stream().map(BaseConverter::toDto).collect(Collectors.toList());
     }
 }

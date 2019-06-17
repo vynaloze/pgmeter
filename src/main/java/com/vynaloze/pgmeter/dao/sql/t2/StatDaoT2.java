@@ -1,7 +1,6 @@
 package com.vynaloze.pgmeter.dao.sql.t2;
 
 import com.vynaloze.pgmeter.dao.sql.DatasourceDao;
-import com.vynaloze.pgmeter.dao.sql.DatasourceRowMapper;
 import com.vynaloze.pgmeter.dao.sql.StatDao;
 import com.vynaloze.pgmeter.dto.DatasourceDto;
 import com.vynaloze.pgmeter.dto.StatDto;
@@ -55,13 +54,6 @@ public class StatDaoT2 implements StatDao {
 
     @Override
     public List<DatasourceDto> getDatasources(final Long tsFrom, final Long tsTo) {
-        final var query = "select distinct d.id as did, d.ip as ip, d.hostname as hostname, d.port as port, d.database as database, d.tags as tags " +
-                "from stats s join datasources d on s.datasource_id = d.id " +
-                "where s.timestamp > :tsFrom and s.timestamp <= :tsTo";
-        final var params = new HashMap<String, Object>();
-        params.put("tsFrom", tsFrom);
-        params.put("tsTo", tsTo);
-        final var list = jdbcTemplate.query(query, params, new DatasourceRowMapper());
-        return list.stream().map(Converter::toDto).collect(Collectors.toList());
+        return datasourceDao.getDatasources(tsFrom, tsTo);
     }
 }
