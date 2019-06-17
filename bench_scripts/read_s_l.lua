@@ -1,1 +1,0 @@
-wrk.path = "/api/stats/virt_mem/3758096383/4294967295"

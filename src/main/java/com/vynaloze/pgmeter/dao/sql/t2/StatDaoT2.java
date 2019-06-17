@@ -1,10 +1,11 @@
 package com.vynaloze.pgmeter.dao.sql.t2;
 
+import com.vynaloze.pgmeter.dao.sql.DatasourceDao;
+import com.vynaloze.pgmeter.dao.sql.DatasourceRowMapper;
 import com.vynaloze.pgmeter.dao.sql.StatDao;
 import com.vynaloze.pgmeter.dto.DatasourceDto;
 import com.vynaloze.pgmeter.dto.StatDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,38 +17,19 @@ import java.util.stream.Collectors;
 @Repository("t2")
 public class StatDaoT2 implements StatDao {
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final DatasourceDao datasourceDao;
 
     @Autowired
-    public StatDaoT2(final NamedParameterJdbcTemplate jdbcTemplate) {
+    public StatDaoT2(final NamedParameterJdbcTemplate jdbcTemplate, final DatasourceDao datasourceDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.datasourceDao = datasourceDao;
     }
 
     @Override
     @Transactional
     public void save(final StatDto statDto) {
         final var stat = Converter.toStat(statDto);
-        Integer dsId;
-        try {
-            dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
-        } catch (final IncorrectResultSizeDataAccessException e) {
-            // means there is no such datasource in the database yet
-            synchronized (this) {
-                // once more, this time synchronized
-                try {
-                    dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
-                } catch (final IncorrectResultSizeDataAccessException e2) {
-                    final var insertDs = "insert into datasources (ip, hostname, port, database, tags) values (:ip, :hostname, :port, :database, :tags)";
-                    final var params = new HashMap<String, Object>();
-                    params.put("ip", stat.getDatasource().getIp());
-                    params.put("hostname", stat.getDatasource().getHostname());
-                    params.put("port", stat.getDatasource().getPort());
-                    params.put("database", stat.getDatasource().getDatabase());
-                    params.put("tags", stat.getDatasource().getTags());
-                    jdbcTemplate.update(insertDs, params);
-                    dsId = getDatasourceId(stat.getDatasource().getIp(), stat.getDatasource().getDatabase());
-                }
-            }
-        }
+        final var dsId = datasourceDao.saveIfNotExist(stat.getDatasource());
         final var insertStat = "insert into stats (timestamp, datasource_id, type, payload) values (:timestamp, :datasource_id, :type, :payload)";
         final var params = new HashMap<String, Object>();
         params.put("timestamp", stat.getTimestamp());
@@ -81,13 +63,5 @@ public class StatDaoT2 implements StatDao {
         params.put("tsTo", tsTo);
         final var list = jdbcTemplate.query(query, params, new DatasourceRowMapper());
         return list.stream().map(Converter::toDto).collect(Collectors.toList());
-    }
-
-    private Integer getDatasourceId(final String ip, final String database) {
-        final var getDsId = "select id from datasources where ip = :ip and database = :database";
-        final var params = new HashMap<String, Object>();
-        params.put("ip", ip);
-        params.put("database", database);
-        return jdbcTemplate.queryForObject(getDsId, params, Integer.class);
     }
 }
