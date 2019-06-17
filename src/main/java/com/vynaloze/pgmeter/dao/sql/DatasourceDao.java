@@ -19,7 +19,7 @@ public class DatasourceDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Integer saveIfNotExist(final Datasource datasource) {
+    public Long saveIfNotExist(final Datasource datasource) {
         try {
             return getDatasourceId(datasource.getIp(), datasource.getDatabase());
         } catch (final IncorrectResultSizeDataAccessException e) {
@@ -43,12 +43,12 @@ public class DatasourceDao {
         }
     }
 
-    private Integer getDatasourceId(final String ip, final String database) {
+    private Long getDatasourceId(final String ip, final String database) {
         final var getDsId = "select id from datasources where ip = :ip and database = :database";
         final var params = new HashMap<String, Object>();
         params.put("ip", ip);
         params.put("database", database);
-        return jdbcTemplate.queryForObject(getDsId, params, Integer.class);
+        return jdbcTemplate.queryForObject(getDsId, params, Long.class);
     }
 
     public List<DatasourceDto> getDatasources(final Long tsFrom, final Long tsTo) {
