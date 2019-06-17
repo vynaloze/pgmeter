@@ -1,1 +1,1 @@
-wrk.path = "/stats/pg_stat_user_indexes/3758096383/4294967295"
+wrk.path = "/api/stats/pg_stat_user_indexes/3758096383/4294967295"

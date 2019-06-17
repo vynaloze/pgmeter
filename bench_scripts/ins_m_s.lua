@@ -4,7 +4,7 @@ request = function()
     wrk.method = "POST"
     wrk.headers["Accept"] = "application/json"
     wrk.headers["Content-Type"] = "application/json"
-    wrk.path = "/stats"
+    wrk.path = "/api/stats"
     body = string.format('{"timestamp":%d,"datasource":{"ip":"192.168.10.%d","hostname":"hn","port":5432,"database":"foo","tags":{}},"id":"pg_stat_user_indexes",' ..
             '"payload":[{"relid":17474,"indexrelid":17480,"schemaname":"public","relname":"example","indexrelname":"idx_example_text","idx_scan":%d,"idx_tup_read":%d,"idx_tup_fetch":%d},' ..
             '{"relid":17490,"indexrelid":17494,"schemaname":"public","relname":"pgbench_branches","indexrelname":"pgbench_branches_pkey","idx_scan":%d,"idx_tup_read":%d,"idx_tup_fetch":%d},' ..

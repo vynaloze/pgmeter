@@ -4,7 +4,7 @@ request = function()
     wrk.method = "POST"
     wrk.headers["Accept"] = "application/json"
     wrk.headers["Content-Type"] = "application/json"
-    wrk.path = "/stats"
+    wrk.path = "/api/stats"
     body = string.format('{"timestamp":%d,"datasource":{"ip":"192.168.10.%d","hostname":"hn","port":5432,"database":"foo","tags":{}},"id":"pg_stat_activity",' ..
             '"payload":[{"datid":null,"datname":null,"pid":%d,"usesysid":10,"usename":"postgres","application_name":"","client_addr":null,"client_hostname":null,"client_port":null,"backend_start":"2019-05-29T20:37:16.317851+02:00","xact_start":null,"query_start":null,"state_change":null,"wait_event_type":"Activity","wait_event":"LogicalLauncherMain","waiting":null,"state":null,"backend_xid":null,"backend_xmin":null,"query":"","backend_type":"background worker"},' ..
             '{"datid":null,"datname":null,"pid":%d,"usesysid":null,"usename":null,"application_name":"","client_addr":null,"client_hostname":null,"client_port":null,"backend_start":"2019-05-29T20:37:16.36418+02:00","xact_start":null,"query_start":null,"state_change":null,"wait_event_type":"Activity","wait_event":"AutoVacuumMain","waiting":null,"state":null,"backend_xid":null,"backend_xmin":null,"query":"","backend_type":"autovacuum launcher"},' ..

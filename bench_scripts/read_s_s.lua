@@ -1,1 +1,1 @@
-wrk.path = "/stats/net/3758096383/4294967295"
+wrk.path = "/api/stats/net/3758096383/4294967295"

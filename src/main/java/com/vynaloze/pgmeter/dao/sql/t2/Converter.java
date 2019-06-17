@@ -37,20 +37,23 @@ class Converter {
     }
 
     static StatDto toDto(final Stat stat) {
-        final var ds = stat.getDatasource();
-        final Map<String, String> tags;
-        try {
-            tags = Parser.reader(Map.class).readValue(ds.getTags());
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        }
         final List<Map<String, Object>> payload;
         try {
             payload = Parser.reader(List.class).readValue(stat.getPayload());
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
-        final var dsDto = new DatasourceDto(ds.getId(), ds.getIp(), ds.getHostname(), ds.getPort(), ds.getDatabase(), tags);
-        return new StatDto(stat.getTimestamp(), dsDto, stat.getType(), payload);
+        return new StatDto(stat.getTimestamp(), toDto(stat.getDatasource()), stat.getType(), payload);
+    }
+
+    static DatasourceDto toDto(final Datasource datasource) {
+        final Map<String, String> tags;
+        try {
+            tags = Parser.reader(Map.class).readValue(datasource.getTags());
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new DatasourceDto(datasource.getId(), datasource.getIp(), datasource.getHostname(), datasource.getPort(),
+                datasource.getDatabase(), tags);
     }
 }

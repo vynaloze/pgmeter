@@ -1,1 +1,1 @@
-wrk.path = "/stats/virt_mem/3758096383/4294967295"
+wrk.path = "/api/stats/virt_mem/3758096383/4294967295"
