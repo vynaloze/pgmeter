@@ -66,9 +66,8 @@ public class StatDaoT4 implements StatDao {
 
     private List<Long> insertRows(final List<Row> rows) {
         final var query = "insert into rows (stat_id) values (?)";
-        try {
-            final var preparedStatement = jdbcTemplate.getJdbcTemplate().getDataSource().getConnection()
-                    .prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (final var connection = jdbcTemplate.getJdbcTemplate().getDataSource().getConnection();
+             final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             for (final var row : rows) {
                 preparedStatement.setLong(1, row.getStatId());
                 preparedStatement.addBatch();
