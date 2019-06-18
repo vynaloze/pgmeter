@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Initial -->
+    <changeSet author="vynaloze" id="2">
+        <createTable tableName="net">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="timestamp" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="datasource" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_ds_stats" references="datasources(id)"/>
+            </column>
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bytesSent" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bytesRecv" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="packetsSent" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="packetsRecv" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="errin" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="errout" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dropin" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dropout" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fifoin" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fifoout" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="stats" indexName="idx_pk_net" unique="true">
+            <column name="id"/>
+        </createIndex>
+
+        <createIndex tableName="stats" indexName="idx_fk_ds_net" unique="false">
+            <column name="datasource_id"/>
+        </createIndex>
+
+        <createIndex tableName="stats" indexName="idx_net_ts" unique="false">
+            <column name="timestamp"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

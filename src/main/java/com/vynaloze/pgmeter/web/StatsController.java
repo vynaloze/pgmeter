@@ -2,6 +2,7 @@ package com.vynaloze.pgmeter.web;
 
 import com.vynaloze.pgmeter.dao.sql.StatDao;
 import com.vynaloze.pgmeter.dto.StatDto;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@ConditionalOnProperty("sql.controller.enabled")
 public class StatsController {
     private final StatDao dao;
 

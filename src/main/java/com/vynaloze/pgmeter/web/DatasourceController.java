@@ -1,6 +1,7 @@
 package com.vynaloze.pgmeter.web;
 
 import com.vynaloze.pgmeter.dao.sql.StatDao;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@ConditionalOnProperty("sql.controller.enabled")
 public class DatasourceController {
     private final StatDao dao;
 
