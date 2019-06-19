@@ -2,6 +2,7 @@ package com.vynaloze.pgmeter.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +14,14 @@ import java.util.HashMap;
 
 @RestController
 public class DevController {
-    @RequestMapping(method = RequestMethod.GET, value = "/dev/h2size")
-    ResponseEntity<?> getH2Size() {
+    @RequestMapping(method = RequestMethod.GET, value = "/dev/size/{filename}")
+    ResponseEntity<?> getSize(final @PathVariable String filename) {
         final var files = new HashMap<String, Long>();
         try {
             Files.walkFileTree(Paths.get("/"), new SimpleFileVisitor<>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    if (file.endsWith("h2_data.mv.db")) {
+                    if (file.endsWith(filename)) {
                         files.put(file.toString(), file.toFile().length());
                     }
                     return super.visitFile(file, attrs);
