@@ -17,8 +17,7 @@ public class Converter {
         } catch (final JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        var ds = toDatasource(dto.getDatasource());
-        return new Stat(null, dto.getTimestamp(), ds, dto.getId(), payload);
+        return new Stat(null, dto.getTimestamp(), toEntity(dto.getDatasource()), dto.getId(), payload);
     }
 
     public static StatDto toDto(final Stat stat) {
@@ -31,7 +30,7 @@ public class Converter {
         return new StatDto(stat.getTimestamp(), toDto(stat.getDatasource()), stat.getType(), payload);
     }
 
-    public static Datasource toDatasource(final DatasourceDto datasourceDto) {
+    public static Datasource toEntity(final DatasourceDto datasourceDto) {
         final String database;
         if (datasourceDto.getDatabase() == null) {
             database = "#system";
@@ -51,11 +50,13 @@ public class Converter {
     }
 
     public static DatasourceDto toDto(final Datasource datasource) {
-        final Map<String, String> tags;
-        try {
-            tags = Parser.reader(Map.class).readValue(datasource.getTags());
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
+        Map<String, String> tags = null;
+        if (datasource.getTags() != null && !datasource.getTags().isEmpty()) {
+            try {
+                tags = Parser.reader(Map.class).readValue(datasource.getTags());
+            } catch (final IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         return new DatasourceDto(datasource.getId(), datasource.getIp(), datasource.getHostname(), datasource.getPort(),
                 datasource.getDatabase(), tags);

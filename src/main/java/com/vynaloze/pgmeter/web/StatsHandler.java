@@ -2,6 +2,7 @@ package com.vynaloze.pgmeter.web;
 
 import com.vynaloze.pgmeter.dao.StatDao;
 import com.vynaloze.pgmeter.dto.Converter;
+import com.vynaloze.pgmeter.dto.DatasourceDto;
 import com.vynaloze.pgmeter.dto.StatDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,14 +35,16 @@ public class StatsHandler {
 
     public Mono<ServerResponse> getStats(final ServerRequest request) {
         final var params = request.pathVariables();
-        return ok().contentType(APPLICATION_JSON)
-                .body(fromObject(params));
+        final var dtos = statDao.getStats(Long.decode(params.get("tsFrom")), Long.decode(params.get("tsTo")), params.get("type"))
+                .map(Converter::toDto);
+        return ok().contentType(APPLICATION_JSON).body(dtos, StatDto.class);
     }
 
     public Mono<ServerResponse> getDatasources(final ServerRequest request) {
         final var params = request.pathVariables();
-        return ok().contentType(APPLICATION_JSON)
-                .body(fromObject(params));
+        final var dtos = statDao.getDatasources(Long.decode(params.get("tsFrom")), Long.decode(params.get("tsTo")))
+                .map(Converter::toDto);
+        return ok().contentType(APPLICATION_JSON).body(dtos, DatasourceDto.class);
     }
 
 }
