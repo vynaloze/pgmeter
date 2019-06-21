@@ -1,6 +1,5 @@
-package com.vynaloze.pgmeter.dao.sql.t4.entity;
+package com.vynaloze.pgmeter.dao.entity;
 
-import com.vynaloze.pgmeter.dao.sql.Datasource;
 import org.springframework.lang.NonNull;
 
 public class Stat {

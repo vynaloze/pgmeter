@@ -1,8 +1,8 @@
-package com.vynaloze.pgmeter.dao.sql.t4;
+package com.vynaloze.pgmeter.dao.util;
 
-import com.vynaloze.pgmeter.dao.sql.t4.entity.Row;
-import com.vynaloze.pgmeter.dao.sql.t4.entity.Stat;
-import com.vynaloze.pgmeter.dao.sql.t4.entity.Value;
+import com.vynaloze.pgmeter.dao.entity.Row;
+import com.vynaloze.pgmeter.dao.entity.Stat;
+import com.vynaloze.pgmeter.dao.entity.Value;
 import org.springframework.lang.NonNull;
 
 import java.util.List;

@@ -1,8 +1,7 @@
 package com.vynaloze.pgmeter.web;
 
-import com.vynaloze.pgmeter.dao.sql.StatDao;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
+import com.vynaloze.pgmeter.dao.StatDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class DatasourceController {
     private final StatDao dao;
 
-    public DatasourceController(final Environment environment, final ApplicationContext applicationContext) {
-        final String dbtype = environment.getProperty("pgmeter.dbtype");
-        this.dao = applicationContext.getBean(dbtype, StatDao.class);
+    @Autowired
+    public DatasourceController(final StatDao dao) {
+        this.dao = dao;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/ds/{tsFrom}/{tsTo}")

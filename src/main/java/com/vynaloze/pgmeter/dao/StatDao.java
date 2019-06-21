@@ -1,4 +1,4 @@
-package com.vynaloze.pgmeter.dao.sql;
+package com.vynaloze.pgmeter.dao;
 
 import com.vynaloze.pgmeter.dto.DatasourceDto;
 import com.vynaloze.pgmeter.dto.StatDto;

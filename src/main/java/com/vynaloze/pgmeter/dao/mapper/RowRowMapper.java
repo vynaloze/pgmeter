@@ -1,6 +1,6 @@
-package com.vynaloze.pgmeter.dao.sql.t4.mapper;
+package com.vynaloze.pgmeter.dao.mapper;
 
-import com.vynaloze.pgmeter.dao.sql.t4.entity.Row;
+import com.vynaloze.pgmeter.dao.entity.Row;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

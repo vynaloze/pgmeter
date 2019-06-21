@@ -1,4 +1,4 @@
-package com.vynaloze.pgmeter.dao.sql.t4.util;
+package com.vynaloze.pgmeter.dao.util;
 
 import java.io.*;
 
