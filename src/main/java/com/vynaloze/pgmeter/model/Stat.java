@@ -1,4 +1,4 @@
-package com.vynaloze.pgmeter.dto;
+package com.vynaloze.pgmeter.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vynaloze.pgmeter.json.Parser;
@@ -7,17 +7,17 @@ import org.springframework.lang.NonNull;
 import java.util.List;
 import java.util.Map;
 
-public class StatDto {
+public class Stat {
     @NonNull
     private final Long timestamp;
     @NonNull
-    private final DatasourceDto datasource;
+    private final Datasource datasource;
     @NonNull
     private final String id;
     @NonNull
     private final List<Map<String, Object>> payload;
 
-    public StatDto(@NonNull final Long timestamp, @NonNull final DatasourceDto datasource, @NonNull final String id, @NonNull final List<Map<String, Object>> payload) {
+    public Stat(@NonNull final Long timestamp, @NonNull final Datasource datasource, @NonNull final String id, @NonNull final List<Map<String, Object>> payload) {
         this.timestamp = timestamp;
         this.datasource = datasource;
         this.id = id;
@@ -30,7 +30,7 @@ public class StatDto {
     }
 
     @NonNull
-    public DatasourceDto getDatasource() {
+    public Datasource getDatasource() {
         return datasource;
     }
 
@@ -49,22 +49,22 @@ public class StatDto {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof StatDto)) {
+        if (!(o instanceof Stat)) {
             return false;
         }
 
-        final StatDto statDto = (StatDto) o;
+        final Stat stat = (Stat) o;
 
-        if (!timestamp.equals(statDto.timestamp)) {
+        if (!timestamp.equals(stat.timestamp)) {
             return false;
         }
-        if (!datasource.equals(statDto.datasource)) {
+        if (!datasource.equals(stat.datasource)) {
             return false;
         }
-        if (!id.equals(statDto.id)) {
+        if (!id.equals(stat.id)) {
             return false;
         }
-        return payload.equals(statDto.payload);
+        return payload.equals(stat.payload);
     }
 
     @Override

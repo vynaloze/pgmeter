@@ -1,11 +1,11 @@
-package com.vynaloze.pgmeter.dto;
+package com.vynaloze.pgmeter.model;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.util.Map;
 
-public class DatasourceDto {
+public class Datasource {
     @Nullable
     private final Long id;
     @NonNull
@@ -19,8 +19,8 @@ public class DatasourceDto {
     @Nullable
     private final Map<String, String> tags;
 
-    public DatasourceDto(@Nullable final Long id, @NonNull final String ip, @Nullable final String hostname,
-                         @Nullable final Integer port, @Nullable final String database, @Nullable final Map<String, String> tags) {
+    public Datasource(@Nullable final Long id, @NonNull final String ip, @Nullable final String hostname,
+                      @Nullable final Integer port, @Nullable final String database, @Nullable final Map<String, String> tags) {
         this.id = id;
         this.ip = ip;
         this.hostname = hostname;
@@ -65,11 +65,11 @@ public class DatasourceDto {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof DatasourceDto)) {
+        if (!(o instanceof Datasource)) {
             return false;
         }
 
-        final DatasourceDto that = (DatasourceDto) o;
+        final Datasource that = (Datasource) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) {
             return false;
