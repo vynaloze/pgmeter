@@ -1,19 +1,13 @@
 package com.vynaloze.pgmeter.dao;
 
-
-import com.vynaloze.pgmeter.dao.entity.Datasource;
-import com.vynaloze.pgmeter.dao.entity.Stat;
+import com.vynaloze.pgmeter.dao.entity.StatEntity;
 
 import java.util.List;
 
 public interface StatDao {
-    boolean save(Stat stat);
+    boolean save(final StatEntity statEntity);
 
-    List<Datasource> getDatasources(final Long tsFrom, final Long tsTo);
+    List<StatEntity> getMostRecentStats(final String type);
 
-    List<Stat> getAllStats(final String type, final Long tsFrom, final Long tsTo);
-
-    List<Stat> getMostRecentStats(final String type);
-
-    List<Stat> getStats(final String type, final Long tsFrom, final Long tsTo, final List<Object> keys);
+    List<StatEntity> getStats(final String type, final Long tsFrom, final Long tsTo);
 }

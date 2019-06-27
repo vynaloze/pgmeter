@@ -3,7 +3,7 @@ package com.vynaloze.pgmeter.dao.entity;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
-public class Datasource {
+public class DatasourceEntity {
     @NonNull
     private final Long id;
     @NonNull
@@ -17,8 +17,8 @@ public class Datasource {
     @Nullable
     private final String tags;
 
-    public Datasource(@NonNull final Long id, @NonNull final String ip, @Nullable final String hostname,
-                      @Nullable final Integer port, @NonNull final String database, @Nullable final String tags) {
+    public DatasourceEntity(@NonNull final Long id, @NonNull final String ip, @Nullable final String hostname,
+                            @Nullable final Integer port, @NonNull final String database, @Nullable final String tags) {
         this.id = id;
         this.ip = ip;
         this.hostname = hostname;
@@ -62,11 +62,11 @@ public class Datasource {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Datasource)) {
+        if (!(o instanceof DatasourceEntity)) {
             return false;
         }
 
-        final Datasource that = (Datasource) o;
+        final DatasourceEntity that = (DatasourceEntity) o;
 
         if (!id.equals(that.id)) {
             return false;

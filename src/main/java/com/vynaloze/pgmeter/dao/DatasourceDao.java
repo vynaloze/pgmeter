@@ -1,17 +1,14 @@
 package com.vynaloze.pgmeter.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
+import com.vynaloze.pgmeter.dao.entity.DatasourceEntity;
 
-@Repository
-public class DatasourceDao {
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+import java.util.List;
+import java.util.Optional;
 
-    @Autowired
-    public DatasourceDao(final NamedParameterJdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+public interface DatasourceDao {
+    boolean save(final DatasourceEntity datasourceEntity);
 
+    Optional<Long> getDatasourceId(final String ip, final String dbName);
 
+    List<DatasourceEntity> getDatasources(final Long tsFrom, final Long tsTo);
 }

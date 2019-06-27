@@ -2,20 +2,22 @@ package com.vynaloze.pgmeter.dao.entity;
 
 import org.springframework.lang.NonNull;
 
-public class Stat {
+public class StatEntity {
     @NonNull
     private final Long id;
     @NonNull
     private final Long timestamp;
     @NonNull
-    private final Datasource datasource;
+    private final Long datasourceId;
     @NonNull
     private final String type;
 
-    public Stat(final Long id, final Long timestamp, final Datasource datasource, final String type) {
+    // todo here will be CLOB
+
+    public StatEntity(final Long id, final Long timestamp, final Long datasourceId, final String type) {
         this.id = id;
         this.timestamp = timestamp;
-        this.datasource = datasource;
+        this.datasourceId = datasourceId;
         this.type = type;
     }
 
@@ -27,8 +29,8 @@ public class Stat {
         return timestamp;
     }
 
-    public Datasource getDatasource() {
-        return datasource;
+    public Long getDatasource() {
+        return datasourceId;
     }
 
     public String getType() {
@@ -40,29 +42,29 @@ public class Stat {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Stat)) {
+        if (!(o instanceof StatEntity)) {
             return false;
         }
 
-        final Stat stat = (Stat) o;
+        final StatEntity statEntity = (StatEntity) o;
 
-        if (!id.equals(stat.id)) {
+        if (!id.equals(statEntity.id)) {
             return false;
         }
-        if (!timestamp.equals(stat.timestamp)) {
+        if (!timestamp.equals(statEntity.timestamp)) {
             return false;
         }
-        if (!datasource.equals(stat.datasource)) {
+        if (!datasourceId.equals(statEntity.datasourceId)) {
             return false;
         }
-        return type.equals(stat.type);
+        return type.equals(statEntity.type);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
         result = 31 * result + timestamp.hashCode();
-        result = 31 * result + datasource.hashCode();
+        result = 31 * result + datasourceId.hashCode();
         result = 31 * result + type.hashCode();
         return result;
     }

@@ -1,30 +1,42 @@
 package com.vynaloze.pgmeter.web;
 
-import com.vynaloze.pgmeter.dao.StatDao;
-import com.vynaloze.pgmeter.dto.StatDto;
+import com.vynaloze.pgmeter.model.Stat;
+import com.vynaloze.pgmeter.model.translate.TranslateRequest;
+import com.vynaloze.pgmeter.service.StatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class StatsController {
-    private final StatDao dao;
+public class StatsController implements StatsApi {
+    private final StatService statService;
 
     @Autowired
-    public StatsController(final StatDao dao) {
-        this.dao = dao;
+    public StatsController(final StatService statService) {
+        this.statService = statService;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/stats")
-    ResponseEntity<?> save(@RequestBody final StatDto dto) {
-        dao.save(dto); //todo error handling
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+// todo - exception handling
+
+    @Override
+    public ResponseEntity<?> save(final Stat stat) {
+        final var saved = statService.saveStat(stat);
+        return saved ? new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/stats/{type}/{tsFrom}/{tsTo}")
-    ResponseEntity<?> getMetrics(final @PathVariable String type, final @PathVariable Long tsFrom, final @PathVariable Long tsTo) {
-        final var stats = dao.getStats(tsFrom, tsTo, type);
-        return new ResponseEntity<>(stats, HttpStatus.OK);
+    @Override
+    public ResponseEntity<?> getDatasources(final Long tsFrom, final Long tsTo) {
+        return new ResponseEntity<>(statService.getDatasources(tsFrom, tsTo), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getMostRecentStats(final String type) {
+        return new ResponseEntity<>(statService.getMostRecentStats(type), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getLinearStats(final TranslateRequest translateRequest) {
+        return new ResponseEntity<>(statService.getLinearStats(translateRequest), HttpStatus.OK);
     }
 }
