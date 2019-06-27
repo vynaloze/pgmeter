@@ -8,7 +8,7 @@ import com.vynaloze.pgmeter.model.translate.TranslateRequest;
 import java.util.List;
 
 public interface StatService {
-    boolean saveStat(final Stat stat);
+    void saveStat(final Stat stat);
 
     List<Datasource> getDatasources(final Long tsFrom, final Long tsTo);
 

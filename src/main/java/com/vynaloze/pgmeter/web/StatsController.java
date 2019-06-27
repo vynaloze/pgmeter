@@ -21,8 +21,8 @@ public class StatsController implements StatsApi {
 
     @Override
     public ResponseEntity<?> save(final Stat stat) {
-        final var saved = statService.saveStat(stat);
-        return saved ? new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        statService.saveStat(stat);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Override

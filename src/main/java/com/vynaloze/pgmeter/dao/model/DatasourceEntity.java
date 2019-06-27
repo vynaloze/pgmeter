@@ -1,4 +1,4 @@
-package com.vynaloze.pgmeter.dao.entity;
+package com.vynaloze.pgmeter.dao.model;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;

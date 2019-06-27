@@ -1,4 +1,4 @@
-package com.vynaloze.pgmeter.dao.entity;
+package com.vynaloze.pgmeter.dao.model;
 
 import org.springframework.lang.NonNull;
 
@@ -8,33 +8,43 @@ public class StatEntity {
     @NonNull
     private final Long timestamp;
     @NonNull
-    private final Long datasourceId;
+    private final DatasourceEntity datasource;
     @NonNull
     private final String type;
+    @NonNull
+    private final String payload;
 
-    // todo here will be CLOB
-
-    public StatEntity(final Long id, final Long timestamp, final Long datasourceId, final String type) {
+    public StatEntity(final @NonNull Long id, final @NonNull Long timestamp, final @NonNull DatasourceEntity datasource, final @NonNull String type, final @NonNull String payload) {
         this.id = id;
         this.timestamp = timestamp;
-        this.datasourceId = datasourceId;
+        this.datasource = datasource;
         this.type = type;
+        this.payload = payload;
     }
 
+    @NonNull
     public Long getId() {
         return id;
     }
 
+    @NonNull
     public Long getTimestamp() {
         return timestamp;
     }
 
-    public Long getDatasource() {
-        return datasourceId;
+    @NonNull
+    public DatasourceEntity getDatasource() {
+        return datasource;
     }
 
+    @NonNull
     public String getType() {
         return type;
+    }
+
+    @NonNull
+    public String getPayload() {
+        return payload;
     }
 
     @Override
@@ -46,26 +56,30 @@ public class StatEntity {
             return false;
         }
 
-        final StatEntity statEntity = (StatEntity) o;
+        final StatEntity that = (StatEntity) o;
 
-        if (!id.equals(statEntity.id)) {
+        if (!id.equals(that.id)) {
             return false;
         }
-        if (!timestamp.equals(statEntity.timestamp)) {
+        if (!timestamp.equals(that.timestamp)) {
             return false;
         }
-        if (!datasourceId.equals(statEntity.datasourceId)) {
+        if (!datasource.equals(that.datasource)) {
             return false;
         }
-        return type.equals(statEntity.type);
+        if (!type.equals(that.type)) {
+            return false;
+        }
+        return payload.equals(that.payload);
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
         result = 31 * result + timestamp.hashCode();
-        result = 31 * result + datasourceId.hashCode();
+        result = 31 * result + datasource.hashCode();
         result = 31 * result + type.hashCode();
+        result = 31 * result + payload.hashCode();
         return result;
     }
 }
