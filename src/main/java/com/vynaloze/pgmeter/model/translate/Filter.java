@@ -1,6 +1,9 @@
 package com.vynaloze.pgmeter.model.translate;
 
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
+import java.util.List;
 
 public class Filter {
     @NonNull
@@ -9,11 +12,14 @@ public class Filter {
     private final Long timestampTo;
     @NonNull
     private final String type;
+    @Nullable
+    private final List<Long> datasourceIds;
 
-    public Filter(final @NonNull Long timestampFrom, final @NonNull Long timestampTo, final @NonNull String type) {
+    public Filter(final @NonNull Long timestampFrom, final @NonNull Long timestampTo, final @NonNull String type, final @Nullable List<Long> datasourceIds) {
         this.timestampFrom = timestampFrom;
         this.timestampTo = timestampTo;
         this.type = type;
+        this.datasourceIds = datasourceIds;
     }
 
     @NonNull
@@ -29,6 +35,11 @@ public class Filter {
     @NonNull
     public String getType() {
         return type;
+    }
+
+    @Nullable
+    public List<Long> getDatasourceIds() {
+        return datasourceIds;
     }
 
     @Override

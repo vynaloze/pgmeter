@@ -45,12 +45,16 @@ public class StatDaoImpl implements StatDao {
     }
 
     @Override
-    public List<StatEntity> getStats(final String type, final Long tsFrom, final Long tsTo) {
-        final var query = "select d.id as did, d.ip as ip, d.hostname as hostname, d.port as port, d.database as database, d.tags as tags, " +
+    public List<StatEntity> getStats(final String type, final Long tsFrom, final Long tsTo, final List<Long> datasourceIds) {
+        var query = "select d.id as did, d.ip as ip, d.hostname as hostname, d.port as port, d.database as database, d.tags as tags, " +
                 "s.id as sid, s.timestamp as timestamp, s.datasource_id as datasource_id, s.type as type, s.payload as payload " +
                 "from stats s join datasources d on s.datasource_id = d.id " +
                 "where s.timestamp > :tsFrom and s.timestamp <= :tsTo and s.type = :type";
         final var params = new HashMap<String, Object>();
+        if (datasourceIds != null && !datasourceIds.isEmpty()) {
+            query += " and s.datasource_id in (:datasources)";
+            params.put("datasources", datasourceIds);
+        }
         params.put("tsFrom", tsFrom);
         params.put("tsTo", tsTo);
         params.put("type", type);

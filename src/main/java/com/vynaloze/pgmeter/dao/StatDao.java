@@ -9,5 +9,5 @@ public interface StatDao {
 
     List<StatEntity> getMostRecentStats(final String type);
 
-    List<StatEntity> getStats(final String type, final Long tsFrom, final Long tsTo);
+    List<StatEntity> getStats(final String type, final Long tsFrom, final Long tsTo, final List<Long> datasourceIds);
 }

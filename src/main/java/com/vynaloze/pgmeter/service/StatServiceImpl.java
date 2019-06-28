@@ -67,7 +67,8 @@ public class StatServiceImpl implements StatService {
         final var entities = statDao.getStats(
                 translateRequest.getFilter().getType(),
                 translateRequest.getFilter().getTimestampFrom(),
-                translateRequest.getFilter().getTimestampTo());
+                translateRequest.getFilter().getTimestampTo(),
+                translateRequest.getFilter().getDatasourceIds());
 
         final var flatStats = entities.stream()
                 .map(mapper::toStat)
