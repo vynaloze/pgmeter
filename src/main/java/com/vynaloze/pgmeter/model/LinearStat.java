@@ -1,26 +1,25 @@
 package com.vynaloze.pgmeter.model;
 
-import org.springframework.lang.NonNull;
-
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class LinearStat {
-    @NonNull
+    @NotNull
     private final Object id;
-    @NonNull
+    @NotNull
     private final List<Point> data;
 
-    public LinearStat(final @NonNull Object id, final @NonNull List<Point> data) {
+    public LinearStat(final @NotNull Object id, final @NotNull List<Point> data) {
         this.id = id;
         this.data = data;
     }
 
-    @NonNull
+    @NotNull
     public Object getId() {
         return id;
     }
 
-    @NonNull
+    @NotNull
     public List<Point> getData() {
         return data;
     }

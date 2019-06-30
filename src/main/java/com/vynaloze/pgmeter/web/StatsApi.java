@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
+
 public interface StatsApi {
     @RequestMapping(method = RequestMethod.POST, value = "/api/stats")
-    ResponseEntity<?> save(final @RequestBody Stat stat);
+    ResponseEntity<?> save(final @RequestBody @Valid Stat stat);
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/stats/{type}")
     ResponseEntity<?> getMostRecentStats(final @PathVariable String type);
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/stats/translate")
-    ResponseEntity<?> getLinearStats(final @RequestBody TranslateRequest translateRequest);
+    ResponseEntity<?> getLinearStats(final @RequestBody @Valid TranslateRequest translateRequest);
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/ds/{tsFrom}/{tsTo}")
     ResponseEntity<?> getDatasources(final @PathVariable Long tsFrom, final @PathVariable Long tsTo);

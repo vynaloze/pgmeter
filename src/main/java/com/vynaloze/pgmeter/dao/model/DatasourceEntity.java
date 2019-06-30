@@ -1,24 +1,23 @@
 package com.vynaloze.pgmeter.dao.model;
 
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
+import javax.validation.constraints.NotNull;
 
 public class DatasourceEntity {
-    @NonNull
+    @NotNull
     private final Long id;
-    @NonNull
+    @NotNull
     private final String ip;
-    @Nullable
+
     private final String hostname;
-    @Nullable
+
     private final Integer port;
-    @NonNull
+    @NotNull
     private final String database;
-    @Nullable
+
     private final String tags;
 
-    public DatasourceEntity(@NonNull final Long id, @NonNull final String ip, @Nullable final String hostname,
-                            @Nullable final Integer port, @NonNull final String database, @Nullable final String tags) {
+    public DatasourceEntity(@NotNull final Long id, @NotNull final String ip, final String hostname,
+                            final Integer port, @NotNull final String database, final String tags) {
         this.id = id;
         this.ip = ip;
         this.hostname = hostname;
@@ -27,32 +26,32 @@ public class DatasourceEntity {
         this.tags = tags;
     }
 
-    @NonNull
+    @NotNull
     public Long getId() {
         return id;
     }
 
-    @NonNull
+    @NotNull
     public String getIp() {
         return ip;
     }
 
-    @Nullable
+
     public String getHostname() {
         return hostname;
     }
 
-    @Nullable
+
     public Integer getPort() {
         return port;
     }
 
-    @NonNull
+    @NotNull
     public String getDatabase() {
         return database;
     }
 
-    @Nullable
+
     public String getTags() {
         return tags;
     }

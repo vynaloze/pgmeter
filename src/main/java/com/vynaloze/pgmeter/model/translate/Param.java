@@ -1,24 +1,24 @@
 package com.vynaloze.pgmeter.model.translate;
 
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotNull;
 
 public class Param {
-    @NonNull
+    @NotNull
     private final String name;
-    @NonNull
+    @NotNull
     private final Type type;
 
-    public Param(final @NonNull String name, final @NonNull Type type) {
+    public Param(final @NotNull String name, final @NotNull Type type) {
         this.name = name;
         this.type = type;
     }
 
-    @NonNull
+    @NotNull
     public String getName() {
         return name;
     }
 
-    @NonNull
+    @NotNull
     public Type getType() {
         return type;
     }

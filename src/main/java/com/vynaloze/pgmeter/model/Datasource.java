@@ -1,26 +1,23 @@
 package com.vynaloze.pgmeter.model;
 
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 public class Datasource {
-    @Nullable
     private final Long id;
-    @NonNull
+    @NotNull
     private final String ip;
-    @Nullable
+
     private final String hostname;
-    @Nullable
+
     private final Integer port;
-    @Nullable
+
     private final String database;
-    @Nullable
+
     private final Map<String, String> tags;
 
-    public Datasource(@Nullable final Long id, @NonNull final String ip, @Nullable final String hostname,
-                      @Nullable final Integer port, @Nullable final String database, @Nullable final Map<String, String> tags) {
+    public Datasource(final Long id, @NotNull final String ip, final String hostname,
+                      final Integer port, final String database, final Map<String, String> tags) {
         this.id = id;
         this.ip = ip;
         this.hostname = hostname;
@@ -29,32 +26,32 @@ public class Datasource {
         this.tags = tags;
     }
 
-    @Nullable
+
     public Long getId() {
         return id;
     }
 
-    @NonNull
+    @NotNull
     public String getIp() {
         return ip;
     }
 
-    @Nullable
+
     public String getHostname() {
         return hostname;
     }
 
-    @Nullable
+
     public Integer getPort() {
         return port;
     }
 
-    @Nullable
+
     public String getDatabase() {
         return database;
     }
 
-    @Nullable
+
     public Map<String, String> getTags() {
         return tags;
     }

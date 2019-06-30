@@ -1,20 +1,20 @@
 package com.vynaloze.pgmeter.dao.model;
 
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotNull;
 
 public class StatEntity {
-    @NonNull
+    @NotNull
     private final Long id;
-    @NonNull
+    @NotNull
     private final Long timestamp;
-    @NonNull
+    @NotNull
     private final DatasourceEntity datasource;
-    @NonNull
+    @NotNull
     private final String type;
-    @NonNull
+    @NotNull
     private final String payload;
 
-    public StatEntity(final @NonNull Long id, final @NonNull Long timestamp, final @NonNull DatasourceEntity datasource, final @NonNull String type, final @NonNull String payload) {
+    public StatEntity(final @NotNull Long id, final @NotNull Long timestamp, final @NotNull DatasourceEntity datasource, final @NotNull String type, final @NotNull String payload) {
         this.id = id;
         this.timestamp = timestamp;
         this.datasource = datasource;
@@ -22,27 +22,27 @@ public class StatEntity {
         this.payload = payload;
     }
 
-    @NonNull
+    @NotNull
     public Long getId() {
         return id;
     }
 
-    @NonNull
+    @NotNull
     public Long getTimestamp() {
         return timestamp;
     }
 
-    @NonNull
+    @NotNull
     public DatasourceEntity getDatasource() {
         return datasource;
     }
 
-    @NonNull
+    @NotNull
     public String getType() {
         return type;
     }
 
-    @NonNull
+    @NotNull
     public String getPayload() {
         return payload;
     }

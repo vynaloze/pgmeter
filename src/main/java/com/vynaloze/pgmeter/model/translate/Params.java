@@ -1,32 +1,32 @@
 package com.vynaloze.pgmeter.model.translate;
 
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotNull;
 
 public class Params {
-    @NonNull
+    @NotNull
     private final Param x;
-    @NonNull
+    @NotNull
     private final Param y;
-    @NonNull
+    @NotNull
     private final Param dimension;
 
-    public Params(final @NonNull Param x, final @NonNull Param y, final @NonNull Param dimension) {
+    public Params(final @NotNull Param x, final @NotNull Param y, final @NotNull Param dimension) {
         this.x = x;
         this.y = y;
         this.dimension = dimension;
     }
 
-    @NonNull
+    @NotNull
     public Param getX() {
         return x;
     }
 
-    @NonNull
+    @NotNull
     public Param getY() {
         return y;
     }
 
-    @NonNull
+    @NotNull
     public Param getDimension() {
         return dimension;
     }

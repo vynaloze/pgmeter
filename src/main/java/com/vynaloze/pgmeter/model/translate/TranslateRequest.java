@@ -1,24 +1,24 @@
 package com.vynaloze.pgmeter.model.translate;
 
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotNull;
 
 public class TranslateRequest {
-    @NonNull
+    @NotNull
     private final Filter filter;
-    @NonNull
+    @NotNull
     private final Params params;
 
-    public TranslateRequest(final @NonNull Filter filter, final @NonNull Params params) {
+    public TranslateRequest(final @NotNull Filter filter, final @NotNull Params params) {
         this.filter = filter;
         this.params = params;
     }
 
-    @NonNull
+    @NotNull
     public Filter getFilter() {
         return filter;
     }
 
-    @NonNull
+    @NotNull
     public Params getParams() {
         return params;
     }

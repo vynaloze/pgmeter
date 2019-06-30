@@ -1,42 +1,41 @@
 package com.vynaloze.pgmeter.dao.model;
 
-import org.springframework.lang.NonNull;
-
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 public class FlatStat {
-    @NonNull
+    @NotNull
     private final Long timestamp;
-    @NonNull
+    @NotNull
     private final Long datasourceId;
-    @NonNull
+    @NotNull
     private final String type;
-    @NonNull
+    @NotNull
     private final Map<String, Object> values;
 
-    public FlatStat(final @NonNull Long timestamp, final @NonNull Long datasourceId, final @NonNull String type, final @NonNull Map<String, Object> values) {
+    public FlatStat(final @NotNull Long timestamp, final @NotNull Long datasourceId, final @NotNull String type, final @NotNull Map<String, Object> values) {
         this.timestamp = timestamp;
         this.datasourceId = datasourceId;
         this.type = type;
         this.values = values;
     }
 
-    @NonNull
+    @NotNull
     public Long getTimestamp() {
         return timestamp;
     }
 
-    @NonNull
+    @NotNull
     public Long getDatasourceId() {
         return datasourceId;
     }
 
-    @NonNull
+    @NotNull
     public String getType() {
         return type;
     }
 
-    @NonNull
+    @NotNull
     public Map<String, Object> getValues() {
         return values;
     }

@@ -1,43 +1,41 @@
 package com.vynaloze.pgmeter.model.translate;
 
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Filter {
-    @NonNull
+    @NotNull
     private final Long timestampFrom;
-    @NonNull
+    @NotNull
     private final Long timestampTo;
-    @NonNull
+    @NotNull
     private final String type;
-    @Nullable
+
     private final List<Long> datasourceIds;
 
-    public Filter(final @NonNull Long timestampFrom, final @NonNull Long timestampTo, final @NonNull String type, final @Nullable List<Long> datasourceIds) {
+    public Filter(final @NotNull Long timestampFrom, final @NotNull Long timestampTo, final @NotNull String type, final List<Long> datasourceIds) {
         this.timestampFrom = timestampFrom;
         this.timestampTo = timestampTo;
         this.type = type;
         this.datasourceIds = datasourceIds;
     }
 
-    @NonNull
+    @NotNull
     public Long getTimestampFrom() {
         return timestampFrom;
     }
 
-    @NonNull
+    @NotNull
     public Long getTimestampTo() {
         return timestampTo;
     }
 
-    @NonNull
+    @NotNull
     public String getType() {
         return type;
     }
 
-    @Nullable
+
     public List<Long> getDatasourceIds() {
         return datasourceIds;
     }

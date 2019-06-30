@@ -1,24 +1,24 @@
 package com.vynaloze.pgmeter.model;
 
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotNull;
 
 public class Point {
-    @NonNull
+    @NotNull
     private final Object x;
-    @NonNull
+    @NotNull
     private final Object y;
 
-    public Point(final @NonNull Object x, final @NonNull Object y) {
+    public Point(final @NotNull Object x, final @NotNull Object y) {
         this.x = x;
         this.y = y;
     }
 
-    @NonNull
+    @NotNull
     public Object getX() {
         return x;
     }
 
-    @NonNull
+    @NotNull
     public Object getY() {
         return y;
     }

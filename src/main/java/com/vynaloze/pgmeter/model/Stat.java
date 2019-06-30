@@ -2,44 +2,44 @@ package com.vynaloze.pgmeter.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vynaloze.pgmeter.json.Parser;
-import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
 public class Stat {
-    @NonNull
+    @NotNull
     private final Long timestamp;
-    @NonNull
+    @NotNull
     private final Datasource datasource;
-    @NonNull
+    @NotNull
     private final String id;
-    @NonNull
+    @NotNull
     private final List<Map<String, Object>> payload;
 
-    public Stat(@NonNull final Long timestamp, @NonNull final Datasource datasource, @NonNull final String id, @NonNull final List<Map<String, Object>> payload) {
+    public Stat(@NotNull final Long timestamp, @NotNull final Datasource datasource, @NotNull final String id, @NotNull final List<Map<String, Object>> payload) {
         this.timestamp = timestamp;
         this.datasource = datasource;
         this.id = id;
         this.payload = payload;
     }
 
-    @NonNull
+    @NotNull
     public Long getTimestamp() {
         return timestamp;
     }
 
-    @NonNull
+    @NotNull
     public Datasource getDatasource() {
         return datasource;
     }
 
-    @NonNull
+    @NotNull
     public String getId() {
         return id;
     }
 
-    @NonNull
+    @NotNull
     public List<Map<String, Object>> getPayload() {
         return payload;
     }
