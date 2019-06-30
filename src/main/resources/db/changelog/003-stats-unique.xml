@@ -5,8 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include file="changelog/001-datasources.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/002-stats.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/003-stats-unique.xml" relativeToChangelogFile="true"/>
+    <changeSet author="vynaloze" id="3">
+        <addUniqueConstraint tableName="stats" columnNames="timestamp, datasource_id, type"/>
+    </changeSet>
 
 </databaseChangeLog>
