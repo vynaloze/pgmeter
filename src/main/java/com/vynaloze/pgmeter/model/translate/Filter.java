@@ -1,5 +1,6 @@
 package com.vynaloze.pgmeter.model.translate;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -10,10 +11,11 @@ public class Filter {
     private final Long timestampTo;
     @NotNull
     private final String type;
-
+    @NotNull
+    @NotEmpty
     private final List<Long> datasourceIds;
 
-    public Filter(final @NotNull Long timestampFrom, final @NotNull Long timestampTo, final @NotNull String type, final List<Long> datasourceIds) {
+    public Filter(final @NotNull Long timestampFrom, final @NotNull Long timestampTo, final @NotNull String type, final @NotNull @NotEmpty List<Long> datasourceIds) {
         this.timestampFrom = timestampFrom;
         this.timestampTo = timestampTo;
         this.type = type;
@@ -35,7 +37,8 @@ public class Filter {
         return type;
     }
 
-
+    @NotNull
+    @NotEmpty
     public List<Long> getDatasourceIds() {
         return datasourceIds;
     }
