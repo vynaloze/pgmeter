@@ -24,10 +24,11 @@ public class TranslatorV2 {
         final var yParam = translateRequest.getParams().getY();
 
         final var groupedByX = groupByParam(stats, xParam);
-        final var groupedByDimension = groupByParam(stats, dimension);
 
         final var labels = new ArrayList<>(new TreeSet<Object>(groupedByX.keySet()));
-        final var datasets = groupedByDimension.keySet().stream()
+        final var datasets = stats.stream()
+                .map(s -> getValue(s, dimension))
+                .distinct()
                 .map(dim -> new Dataset(dim, new ArrayList<>()))
                 .collect(Collectors.toList());
 

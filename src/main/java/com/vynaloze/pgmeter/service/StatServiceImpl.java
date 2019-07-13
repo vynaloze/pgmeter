@@ -4,7 +4,7 @@ import com.vynaloze.pgmeter.dao.DatasourceDao;
 import com.vynaloze.pgmeter.dao.StatDao;
 import com.vynaloze.pgmeter.dao.model.FlatStat;
 import com.vynaloze.pgmeter.model.Datasource;
-import com.vynaloze.pgmeter.model.LinearStat;
+import com.vynaloze.pgmeter.model.LinearStats;
 import com.vynaloze.pgmeter.model.Stat;
 import com.vynaloze.pgmeter.model.translate.TranslateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,10 @@ public class StatServiceImpl implements StatService {
     private final StatDao statDao;
     private final DatasourceDao datasourceDao;
     private final Mapper mapper;
-    private final Translator translator;
+    private final TranslatorV2 translator;
 
     @Autowired
-    public StatServiceImpl(final StatDao statDao, final DatasourceDao datasourceDao, final Mapper mapper, final Translator translator) {
+    public StatServiceImpl(final StatDao statDao, final DatasourceDao datasourceDao, final Mapper mapper, final TranslatorV2 translator) {
         this.statDao = statDao;
         this.datasourceDao = datasourceDao;
         this.mapper = mapper;
@@ -63,7 +63,7 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<LinearStat> getLinearStats(final TranslateRequest translateRequest) {
+    public LinearStats getLinearStats(final TranslateRequest translateRequest) {
         final var entities = statDao.getStats(
                 translateRequest.getFilter().getType(),
                 translateRequest.getFilter().getTimestampFrom(),
