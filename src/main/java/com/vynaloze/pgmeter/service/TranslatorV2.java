@@ -11,10 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class TranslatorV2 {
@@ -23,7 +20,7 @@ public class TranslatorV2 {
         final var xParam = translateRequest.getParams().getX();
         final var yParam = translateRequest.getParams().getY();
 
-        final var groupedByX = groupByParam(stats, xParam);
+        final var groupedByX = groupByXParam(stats, xParam);
 
         final var labels = new ArrayList<>(new TreeSet<Object>(groupedByX.keySet()));
         final var datasets = stats.stream()
@@ -40,7 +37,7 @@ public class TranslatorV2 {
                 } else if (dimensionStats.size() == 1) {
                     ds.getData().add(getValue(dimensionStats.get(0), yParam));
                 } else {
-                    throw new TranslateException("Multiple y values for single x and single dimension");
+                    throw new TranslateException("Multiple y values for single x and dimension");
                 }
             });
 
@@ -49,7 +46,7 @@ public class TranslatorV2 {
     }
 
 
-    private TreeMap<?, List<FlatStat>> groupByParam(final List<FlatStat> stats, final Param param) {
+    private TreeMap<?, List<FlatStat>> groupByXParam(final List<FlatStat> stats, final Param param) {
         switch (param.getType()) {
             case TIMESTAMP:
                 return new TreeMap<>(stats.stream().collect(Collectors.groupingBy(FlatStat::getTimestamp)));
@@ -57,16 +54,18 @@ public class TranslatorV2 {
                 return new TreeMap<>(stats.stream().collect(Collectors.groupingBy(FlatStat::getDatasourceId)));
             case KEY:
                 return new TreeMap<>(stats.stream().collect(Collectors.groupingBy(s -> s.getValues().get(param.getName()))));
-            case COMPOSITE_KEY:
-                final var simpleKeys = Pattern.compile("\\.").split(param.getName());
-                final Function<FlatStat, String> compositeKey = stat ->
-                        Stream.of(simpleKeys)
-                                .map(key -> stat.getValues().get(key).toString())
-                                .collect(Collectors.joining("."));
-                return new TreeMap<>(stats.stream().collect(Collectors.groupingBy(compositeKey)));
             default:
                 throw new IllegalStateException("unrecognized enum type: " + param.getType().name());
         }
+    }
+
+    private Object getValue(final FlatStat stat, final List<Param> params) {
+        if (params.size() == 1) {
+            return getValue(stat, params.get(0));
+        }
+        return params.stream()
+                .map(p -> getValue(stat, p))
+                .collect(Collectors.toList());
     }
 
     private Object getValue(final FlatStat stat, final Param param) {
@@ -76,11 +75,11 @@ public class TranslatorV2 {
             case DATASOURCE:
                 return stat.getDatasourceId();
             case KEY:
-                return stat.getValues().get(param.getName());
-            case COMPOSITE_KEY:
-                return Stream.of(Pattern.compile("\\.").split(param.getName()))
-                        .map(key -> stat.getValues().get(key).toString())
-                        .collect(Collectors.joining("."));
+                final var val = stat.getValues().get(param.getName());
+                if (val == null) {
+                    throw new TranslateException("Key \"" + param.getName() + "\" does not exist");
+                }
+                return val;
             default:
                 throw new IllegalStateException("unrecognized enum type: " + param.getType().name());
         }

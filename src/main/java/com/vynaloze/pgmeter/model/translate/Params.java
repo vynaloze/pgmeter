@@ -1,6 +1,9 @@
 package com.vynaloze.pgmeter.model.translate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class Params {
     @NotNull
@@ -8,12 +11,19 @@ public class Params {
     @NotNull
     private final Param y;
     @NotNull
-    private final Param dimension;
+    private final List<Param> dimension;
 
-    public Params(final @NotNull Param x, final @NotNull Param y, final @NotNull Param dimension) {
+    public Params(final @NotNull Param x, final @NotNull Param y, final @NotNull List<Param> dimension) {
         this.x = x;
         this.y = y;
         this.dimension = dimension;
+    }
+
+    @JsonIgnore
+    public Params(@NotNull final Param x, @NotNull final Param y, @NotNull final Param dimension) {
+        this.x = x;
+        this.y = y;
+        this.dimension = List.of(dimension);
     }
 
     @NotNull
@@ -27,7 +37,7 @@ public class Params {
     }
 
     @NotNull
-    public Param getDimension() {
+    public List<Param> getDimension() {
         return dimension;
     }
 

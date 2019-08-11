@@ -9,6 +9,4 @@ public enum Type {
     DATASOURCE,
     @JsonProperty("key")
     KEY,
-    @JsonProperty("composite_key")
-    COMPOSITE_KEY,
 }
