@@ -75,11 +75,10 @@ public class TranslatorV2 {
             case DATASOURCE:
                 return stat.getDatasourceId();
             case KEY:
-                final var val = stat.getValues().get(param.getName());
-                if (val == null) {
+                if (!stat.getValues().containsKey(param.getName())) {
                     throw new TranslateException("Key \"" + param.getName() + "\" does not exist");
                 }
-                return val;
+                return stat.getValues().get(param.getName());
             default:
                 throw new IllegalStateException("unrecognized enum type: " + param.getType().name());
         }
