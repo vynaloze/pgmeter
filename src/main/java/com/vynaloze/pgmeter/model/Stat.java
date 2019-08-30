@@ -1,11 +1,14 @@
 package com.vynaloze.pgmeter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vynaloze.pgmeter.json.Parser;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Stat {
     @NotNull
@@ -22,6 +25,14 @@ public class Stat {
         this.datasource = datasource;
         this.id = id;
         this.payload = payload;
+    }
+
+    @JsonIgnore
+    public Stat(@NotNull final Stat stat, @NotNull final Datasource datasource) {
+        this.timestamp = stat.timestamp;
+        this.datasource = datasource;
+        this.id = stat.id;
+        this.payload = stat.payload.stream().map(HashMap::new).collect(Collectors.toList());
     }
 
     @NotNull

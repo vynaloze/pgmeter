@@ -1,6 +1,9 @@
 package com.vynaloze.pgmeter.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Datasource {
@@ -24,6 +27,16 @@ public class Datasource {
         this.port = port;
         this.database = database;
         this.tags = tags;
+    }
+
+    @JsonIgnore
+    public Datasource(@NotNull final Datasource datasource, @NotNull final Long id) {
+        this.id = id;
+        this.ip = datasource.ip;
+        this.hostname = datasource.hostname;
+        this.port = datasource.port;
+        this.database = datasource.database;
+        this.tags = datasource.tags == null ? null : new HashMap<>(datasource.tags);
     }
 
 

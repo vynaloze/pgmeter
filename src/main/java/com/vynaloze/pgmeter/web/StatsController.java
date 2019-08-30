@@ -3,6 +3,7 @@ package com.vynaloze.pgmeter.web;
 import com.vynaloze.pgmeter.model.Stat;
 import com.vynaloze.pgmeter.model.translate.TranslateRequest;
 import com.vynaloze.pgmeter.service.StatService;
+import com.vynaloze.pgmeter.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StatsController implements StatsApi {
     private final StatService statService;
+    private final SubscriptionService subscriptionService;
 
     @Autowired
-    public StatsController(final StatService statService) {
+    public StatsController(final StatService statService, final SubscriptionService subscriptionService) {
         this.statService = statService;
+        this.subscriptionService = subscriptionService;
     }
 
 // todo - exception handling
 
     @Override
     public ResponseEntity<?> save(final Stat stat) {
-        statService.saveStat(stat);
+        final var savedStat = statService.saveStat(stat);
+        subscriptionService.handleNewStatEvent(savedStat);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

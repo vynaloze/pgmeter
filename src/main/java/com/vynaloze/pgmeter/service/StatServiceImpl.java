@@ -30,7 +30,7 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public void saveStat(final Stat stat) {
+    public Stat saveStat(final Stat stat) {
         final var entity = mapper.toEntity(stat.getDatasource());
         final var ip = entity.getIp();
         final var database = entity.getDatabase();
@@ -46,6 +46,8 @@ public class StatServiceImpl implements StatService {
         }
         final var statEntity = mapper.toEntity(stat, ds.get());
         statDao.save(statEntity);
+
+        return new Stat(stat, new Datasource(stat.getDatasource(), ds.get().getId()));
     }
 
     @Override
