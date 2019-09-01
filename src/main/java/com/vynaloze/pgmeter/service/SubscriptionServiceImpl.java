@@ -1,8 +1,8 @@
 package com.vynaloze.pgmeter.service;
 
 import com.vynaloze.pgmeter.model.Stat;
+import com.vynaloze.pgmeter.model.subscription.Event;
 import com.vynaloze.pgmeter.model.subscription.NewStatEvent;
-import com.vynaloze.pgmeter.model.subscription.StillAliveEvent;
 import com.vynaloze.pgmeter.model.subscription.Subscription;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -41,10 +41,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     @Scheduled(fixedRate = 30000, initialDelay = 30000)
     public void keepConnectionAlive() {
-        this.sendEvent(new StillAliveEvent());
+        this.sendEvent(new Event(true));
     }
 
-    private void sendEvent(final Object event, final Predicate<Subscription> filter) {
+    private void sendEvent(final Event event, final Predicate<Subscription> filter) {
         final var deadSubs = new ArrayList<Subscription>();
         this.subscriptions.stream()
                 .filter(filter)
@@ -58,7 +58,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         this.subscriptions.removeAll(deadSubs);
     }
 
-    private void sendEvent(final Object event) {
+    private void sendEvent(final Event event) {
         this.sendEvent(event, s -> true);
     }
 }

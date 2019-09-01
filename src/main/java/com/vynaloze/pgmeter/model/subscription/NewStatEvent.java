@@ -2,7 +2,7 @@ package com.vynaloze.pgmeter.model.subscription;
 
 import javax.validation.constraints.NotNull;
 
-public class NewStatEvent {
+public class NewStatEvent extends Event {
     @NotNull
     private final Long timestamp;
     @NotNull
@@ -11,6 +11,7 @@ public class NewStatEvent {
     private final String type;
 
     public NewStatEvent(@NotNull final Long timestamp, @NotNull final Long datasourceId, @NotNull final String type) {
+        super(false);
         this.timestamp = timestamp;
         this.datasourceId = datasourceId;
         this.type = type;
@@ -36,21 +37,25 @@ public class NewStatEvent {
         if (!(o instanceof NewStatEvent)) {
             return false;
         }
-
-        final NewStatEvent event = (NewStatEvent) o;
-
-        if (!timestamp.equals(event.timestamp)) {
+        if (!super.equals(o)) {
             return false;
         }
-        if (!datasourceId.equals(event.datasourceId)) {
+
+        final NewStatEvent that = (NewStatEvent) o;
+
+        if (!timestamp.equals(that.timestamp)) {
             return false;
         }
-        return type.equals(event.type);
+        if (!datasourceId.equals(that.datasourceId)) {
+            return false;
+        }
+        return type.equals(that.type);
     }
 
     @Override
     public int hashCode() {
-        int result = timestamp.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + timestamp.hashCode();
         result = 31 * result + datasourceId.hashCode();
         result = 31 * result + type.hashCode();
         return result;
