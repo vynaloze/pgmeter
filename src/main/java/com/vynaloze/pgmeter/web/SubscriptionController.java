@@ -2,12 +2,14 @@ package com.vynaloze.pgmeter.web;
 
 import com.vynaloze.pgmeter.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*") //fixme in prod
 public class SubscriptionController implements SubscriptionApi {
     private final SubscriptionService subscriptionService;
 
