@@ -43,6 +43,6 @@ public class StatsController implements StatsApi {
 
     @Override
     public ResponseEntity<?> getLinearStats(final TranslateRequest translateRequest) {
-        return new ResponseEntity<>(statService.getLinearStats(translateRequest), HttpStatus.OK);
+        return new ResponseEntity<>(statService.getTranslatedStats(translateRequest), HttpStatus.OK);
     }
 }

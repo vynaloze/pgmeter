@@ -1,14 +1,15 @@
 package com.vynaloze.pgmeter.model.translate;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class TranslateRequest {
     @NotNull
     private final Filter filter;
     @NotNull
-    private final Params params;
+    private final List<Params> params;
 
-    public TranslateRequest(final @NotNull Filter filter, final @NotNull Params params) {
+    public TranslateRequest(final @NotNull Filter filter, final @NotNull List<Params> params) {
         this.filter = filter;
         this.params = params;
     }
@@ -19,7 +20,7 @@ public class TranslateRequest {
     }
 
     @NotNull
-    public Params getParams() {
+    public List<Params> getParams() {
         return params;
     }
 

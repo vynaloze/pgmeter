@@ -4,7 +4,7 @@ import com.vynaloze.pgmeter.dao.model.FlatStat;
 import com.vynaloze.pgmeter.model.Dataset;
 import com.vynaloze.pgmeter.model.LinearStats;
 import com.vynaloze.pgmeter.model.translate.Param;
-import com.vynaloze.pgmeter.model.translate.TranslateRequest;
+import com.vynaloze.pgmeter.model.translate.Params;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class TranslatorV2 {
-    public LinearStats translate(final List<FlatStat> stats, final TranslateRequest translateRequest) {
-        final var dimension = translateRequest.getParams().getDimension();
-        final var xParam = translateRequest.getParams().getX();
-        final var yParam = translateRequest.getParams().getY();
+    public LinearStats translate(final List<FlatStat> stats, final Params params) {
+        final var dimension = params.getDimension();
+        final var xParam = params.getX();
+        final var yParam = params.getY();
 
         final var groupedByX = groupByXParam(stats, xParam);
 

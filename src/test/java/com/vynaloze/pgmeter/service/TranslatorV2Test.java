@@ -5,7 +5,6 @@ import com.vynaloze.pgmeter.model.Dataset;
 import com.vynaloze.pgmeter.model.LinearStats;
 import com.vynaloze.pgmeter.model.translate.Param;
 import com.vynaloze.pgmeter.model.translate.Params;
-import com.vynaloze.pgmeter.model.translate.TranslateRequest;
 import com.vynaloze.pgmeter.model.translate.Type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -66,37 +65,37 @@ public class TranslatorV2Test {
 
 
     /* WHEN - VALID */
-    private final TranslateRequest keyByDatasourceRequest = new TranslateRequest(null, new Params(
+    private final Params keyByDatasourceRequest = new Params(
             new Param("timestamp", Type.TIMESTAMP),
             new Param("key2", Type.KEY),
             new Param("datasource", Type.DATASOURCE)
-    ));
-    private final TranslateRequest keyByCompositeKeyRequest = new TranslateRequest(null, new Params(
+    );
+    private final Params keyByCompositeKeyRequest = new Params(
             new Param("timestamp", Type.TIMESTAMP),
             new Param("key3", Type.KEY),
             List.of(new Param("key0", Type.KEY), new Param("key1", Type.KEY))
-    ));
-    private final TranslateRequest keyByKeyNoTsRequest = new TranslateRequest(null, new Params(
+    );
+    private final Params keyByKeyNoTsRequest = new Params(
             new Param("key3", Type.KEY),
             new Param("key1", Type.KEY),
             new Param("key2", Type.KEY)
-    ));
-    private final TranslateRequest keyByCompositeKey2Request = new TranslateRequest(null, new Params(
+    );
+    private final Params keyByCompositeKey2Request = new Params(
             new Param("timestamp", Type.TIMESTAMP),
             new Param("key3", Type.KEY),
             List.of(new Param("ds", Type.DATASOURCE), new Param("key1", Type.KEY))
-    ));
+    );
     /* WHEN - INVALID */
-    private final TranslateRequest duplicateXValuesRequest = new TranslateRequest(null, new Params(
+    private final Params duplicateXValuesRequest = new Params(
             new Param("datasource", Type.DATASOURCE),
             new Param("key1", Type.KEY),
             new Param("key2", Type.KEY)
-    ));
-    private final TranslateRequest nonExistingKeyRequest = new TranslateRequest(null, new Params(
+    );
+    private final Params nonExistingKeyRequest = new Params(
             new Param("datasource", Type.DATASOURCE),
             new Param("invalid", Type.KEY),
             new Param("key2", Type.KEY)
-    ));
+    );
 
 
     /* THEN */
@@ -146,7 +145,7 @@ public class TranslatorV2Test {
 
         for (final var entry : testTable) {
             LOGGER.info(entry.getTestCase());
-            final var actual = translator.translate(entry.getGiven(), entry.getRequest());
+            final var actual = translator.translate(entry.getGiven(), entry.getParams());
             assertThat(actual).isEqualTo(entry.getExpected());
         }
     }
@@ -163,13 +162,13 @@ public class TranslatorV2Test {
     private class TestEntry {
         private final String testCase;
         private final List<FlatStat> given;
-        private final TranslateRequest request;
+        private final Params params;
         private final LinearStats expected;
 
-        TestEntry(final String testCase, final List<FlatStat> given, final TranslateRequest request, final LinearStats expected) {
+        TestEntry(final String testCase, final List<FlatStat> given, final Params params, final LinearStats expected) {
             this.testCase = testCase;
             this.given = given;
-            this.request = request;
+            this.params = params;
             this.expected = expected;
         }
 
@@ -181,8 +180,8 @@ public class TranslatorV2Test {
             return given;
         }
 
-        TranslateRequest getRequest() {
-            return request;
+        Params getParams() {
+            return params;
         }
 
         LinearStats getExpected() {

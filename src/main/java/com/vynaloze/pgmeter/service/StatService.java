@@ -1,8 +1,8 @@
 package com.vynaloze.pgmeter.service;
 
 import com.vynaloze.pgmeter.model.Datasource;
-import com.vynaloze.pgmeter.model.LinearStats;
 import com.vynaloze.pgmeter.model.Stat;
+import com.vynaloze.pgmeter.model.TranslatedStats;
 import com.vynaloze.pgmeter.model.translate.TranslateRequest;
 
 import java.util.List;
@@ -14,5 +14,5 @@ public interface StatService {
 
     List<Stat> getMostRecentStats(final String type);
 
-    LinearStats getLinearStats(final TranslateRequest translateRequest);
+    List<TranslatedStats> getTranslatedStats(final TranslateRequest translateRequest);
 }
