@@ -2,8 +2,8 @@ package com.vynaloze.pgmeter.service;
 
 import com.vynaloze.pgmeter.dao.DatasourceDao;
 import com.vynaloze.pgmeter.dao.StatDao;
-import com.vynaloze.pgmeter.dao.model.FlatStat;
 import com.vynaloze.pgmeter.model.Datasource;
+import com.vynaloze.pgmeter.model.FlatStat;
 import com.vynaloze.pgmeter.model.Stat;
 import com.vynaloze.pgmeter.model.TranslatedStats;
 import com.vynaloze.pgmeter.model.translate.TranslateRequest;

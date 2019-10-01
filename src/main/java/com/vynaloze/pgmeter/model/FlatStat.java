@@ -1,4 +1,4 @@
-package com.vynaloze.pgmeter.dao.model;
+package com.vynaloze.pgmeter.model;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package com.vynaloze.pgmeter.service;
 
-import com.vynaloze.pgmeter.dao.model.FlatStat;
 import com.vynaloze.pgmeter.model.Dataset;
+import com.vynaloze.pgmeter.model.FlatStat;
 import com.vynaloze.pgmeter.model.LinearStats;
 import com.vynaloze.pgmeter.model.translate.Param;
 import com.vynaloze.pgmeter.model.translate.Params;
