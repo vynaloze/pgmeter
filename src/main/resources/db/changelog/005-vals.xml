@@ -5,27 +5,22 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet author="vynaloze" id="1">
-        <createTable tableName="datasources">
+    <changeSet author="vynaloze" id="5">
+        <createTable tableName="vals">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" unique="true"/>
             </column>
-            <column name="ip" type="VARCHAR">
+            <column name="key" type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="hostname" type="VARCHAR"/>
-            <column name="port" type="INT"/>
-            <column name="database" type="VARCHAR">
+            <column name="type" type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="tags" type="VARCHAR"/>
         </createTable>
 
-        <createIndex tableName="datasources" indexName="idx_pk_datasources" unique="true">
+        <createIndex tableName="vals" indexName="idx_pk_vals" unique="true">
             <column name="id"/>
         </createIndex>
-
-        <addUniqueConstraint tableName="datasources" columnNames="ip,database"/>
     </changeSet>
 
 </databaseChangeLog>

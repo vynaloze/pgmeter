@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="vynaloze" id="6">
+        <createTable tableName="facts">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="datasource_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_datasources_facts" references="datasources(id)"/>
+            </column>
+            <column name="date_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_dates_facts" references="dates(id)"/>
+            </column>
+            <column name="stat_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_stats_facts" references="stats(id)"/>
+            </column>
+            <column name="group_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_groups_facts" references="groups(id)"/>
+            </column>
+            <column name="val_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_vals_facts" references="vals(id)"/>
+            </column>
+            <column name="value" type="BINARY">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="facts" indexName="idx_pk_facts" unique="true">
+            <column name="id"/>
+        </createIndex>
+
+        <createIndex tableName="facts" indexName="idx_fk_datasources_facts" unique="false">
+            <column name="datasource_id"/>
+        </createIndex>
+        <createIndex tableName="facts" indexName="idx_fk_dates_facts" unique="false">
+            <column name="date_id"/>
+        </createIndex>
+        <createIndex tableName="facts" indexName="idx_fk_stats_facts" unique="false">
+            <column name="stat_id"/>
+        </createIndex>
+        <createIndex tableName="facts" indexName="idx_fk_groups_facts" unique="false">
+            <column name="group_id"/>
+        </createIndex>
+        <createIndex tableName="facts" indexName="idx_fk_vals_facts" unique="false">
+            <column name="val_id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>
