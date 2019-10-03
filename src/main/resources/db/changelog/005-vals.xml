@@ -13,9 +13,6 @@
             <column name="key" type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="type" type="VARCHAR">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
         <createIndex tableName="vals" indexName="idx_pk_vals" unique="true">
