@@ -3,83 +3,56 @@ package com.vynaloze.pgmeter.dao.model;
 import javax.validation.constraints.NotNull;
 
 public class StatEntity {
-    @NotNull
     private final Long id;
     @NotNull
-    private final Long timestamp;
+    private final String name;
     @NotNull
-    private final DatasourceEntity datasource;
+    private final Boolean system;
     @NotNull
-    private final String type;
-    @NotNull
-    private final String payload;
+    private final Boolean postgres;
 
-    public StatEntity(final @NotNull Long id, final @NotNull Long timestamp, final @NotNull DatasourceEntity datasource, final @NotNull String type, final @NotNull String payload) {
+    public StatEntity(final Long id, @NotNull final String name, @NotNull final Boolean system, @NotNull final Boolean postgres) {
         this.id = id;
-        this.timestamp = timestamp;
-        this.datasource = datasource;
-        this.type = type;
-        this.payload = payload;
+        this.name = name;
+        this.system = system;
+        this.postgres = postgres;
     }
 
-    @NotNull
     public Long getId() {
         return id;
     }
 
-    @NotNull
-    public Long getTimestamp() {
-        return timestamp;
+    public String getName() {
+        return name;
     }
 
-    @NotNull
-    public DatasourceEntity getDatasource() {
-        return datasource;
+    public Boolean getSystem() {
+        return system;
     }
 
-    @NotNull
-    public String getType() {
-        return type;
-    }
-
-    @NotNull
-    public String getPayload() {
-        return payload;
+    public Boolean getPostgres() {
+        return postgres;
     }
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof StatEntity)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         final StatEntity that = (StatEntity) o;
 
-        if (!id.equals(that.id)) {
-            return false;
-        }
-        if (!timestamp.equals(that.timestamp)) {
-            return false;
-        }
-        if (!datasource.equals(that.datasource)) {
-            return false;
-        }
-        if (!type.equals(that.type)) {
-            return false;
-        }
-        return payload.equals(that.payload);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (!name.equals(that.name)) return false;
+        if (!system.equals(that.system)) return false;
+        return postgres.equals(that.postgres);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + timestamp.hashCode();
-        result = 31 * result + datasource.hashCode();
-        result = 31 * result + type.hashCode();
-        result = 31 * result + payload.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + system.hashCode();
+        result = 31 * result + postgres.hashCode();
         return result;
     }
 }
