@@ -8,10 +8,10 @@ import java.sql.SQLException;
 public class StatRowMapper implements RowMapper<StatEntity> {
     @Override
     public StatEntity mapRow(final ResultSet resultSet, final int i) throws SQLException {
-        final var sId = resultSet.getLong("sid");
-        final var name = resultSet.getString("name");
+        final var id = resultSet.getLong("id");
+        final var type = resultSet.getString("type");
         final var system = resultSet.getBoolean("system");
         final var postgres = resultSet.getBoolean("postgres");
-        return new StatEntity(sId, name, system, postgres);
+        return new StatEntity(id, type, system, postgres);
     }
 }

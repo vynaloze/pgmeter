@@ -1,7 +1,7 @@
 package com.vynaloze.pgmeter.service;
 
 import com.vynaloze.pgmeter.dao.DatasourceDao;
-import com.vynaloze.pgmeter.dao.StatDao;
+import com.vynaloze.pgmeter.dao.FactDao;
 import com.vynaloze.pgmeter.model.Datasource;
 import com.vynaloze.pgmeter.model.FlatStat;
 import com.vynaloze.pgmeter.model.Stat;
@@ -9,21 +9,20 @@ import com.vynaloze.pgmeter.model.TranslatedStats;
 import com.vynaloze.pgmeter.model.translate.TranslateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class StatServiceImpl implements StatService {
-    private final StatDao statDao;
+    private final FactDao factDao;
     private final DatasourceDao datasourceDao;
     private final Mapper mapper;
     private final TranslatorV2 translator;
 
     @Autowired
-    public StatServiceImpl(final StatDao statDao, final DatasourceDao datasourceDao, final Mapper mapper, final TranslatorV2 translator) {
-        this.statDao = statDao;
+    public StatServiceImpl(final FactDao factDao, final DatasourceDao datasourceDao, final Mapper mapper, final TranslatorV2 translator) {
+        this.factDao = factDao;
         this.datasourceDao = datasourceDao;
         this.mapper = mapper;
         this.translator = translator;
@@ -45,7 +44,7 @@ public class StatServiceImpl implements StatService {
             }
         }
         final var statEntity = mapper.toEntity(stat, ds.get());
-        statDao.save(statEntity);
+        factDao.save(statEntity);
 
         return new Stat(stat, new Datasource(stat.getDatasource(), ds.get().getId()));
     }
@@ -59,14 +58,14 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public List<Stat> getMostRecentStats(final String type) {
-        return statDao.getMostRecentStats(type).stream()
+        return factDao.getMostRecent(type).stream()
                 .map(mapper::toStat)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<TranslatedStats> getTranslatedStats(final TranslateRequest translateRequest) {
-        final var entities = statDao.getStats(
+        final var entities = factDao.get(
                 translateRequest.getFilter().getType(),
                 translateRequest.getFilter().getTimestampFrom(),
                 translateRequest.getFilter().getTimestampTo(),

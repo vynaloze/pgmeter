@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class ValRowMapper implements RowMapper<ValEntity> {
     @Override
     public ValEntity mapRow(final ResultSet resultSet, final int i) throws SQLException {
-        final var sId = resultSet.getLong("sid");
+        final var id = resultSet.getLong("id");
         final var key = resultSet.getString("key");
-        return new ValEntity(sId, key);
+        return new ValEntity(id, key);
     }
 }
