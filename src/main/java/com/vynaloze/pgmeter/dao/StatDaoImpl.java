@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class StatDaoImpl implements StatDao {
     public void save(final StatEntity statEntity) {
         final var insertQuery = "insert into stats (name, system, postgres) values (:name, :system, :postgres)";
         final var params = new HashMap<String, Object>();
-        params.put("name", statEntity.getType());
+        params.put("name", statEntity.getName());
         params.put("system", statEntity.getSystem());
         params.put("postgres", statEntity.getPostgres());
         jdbcTemplate.update(insertQuery, params);

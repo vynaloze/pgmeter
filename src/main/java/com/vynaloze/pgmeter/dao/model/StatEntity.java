@@ -5,15 +5,15 @@ import javax.validation.constraints.NotNull;
 public class StatEntity {
     private final Long id;
     @NotNull
-    private final String type;
+    private final String name;
     @NotNull
     private final Boolean system;
     @NotNull
     private final Boolean postgres;
 
-    public StatEntity(final Long id, @NotNull final String type, @NotNull final Boolean system, @NotNull final Boolean postgres) {
+    public StatEntity(final Long id, @NotNull final String name, @NotNull final Boolean system, @NotNull final Boolean postgres) {
         this.id = id;
-        this.type = type;
+        this.name = name;
         this.system = system;
         this.postgres = postgres;
     }
@@ -22,8 +22,8 @@ public class StatEntity {
         return id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
     public Boolean getSystem() {
@@ -42,7 +42,9 @@ public class StatEntity {
         final StatEntity that = (StatEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (!type.equals(that.type)) return false;
+        if (!name.equals(that.name)) {
+            return false;
+        }
         if (!system.equals(that.system)) return false;
         return postgres.equals(that.postgres);
     }
@@ -50,7 +52,7 @@ public class StatEntity {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + type.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + system.hashCode();
         result = 31 * result + postgres.hashCode();
         return result;

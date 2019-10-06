@@ -18,8 +18,9 @@ public class GroupDaoImpl implements GroupDao {
 
     @Override
     public void save(final GroupEntity groupEntity) {
-        final var insertQuery = "insert into groups values ()";
+        final var insertQuery = "insert into groups(id) values (:id)";
         final var params = new HashMap<String, Object>();
+        params.put("id", groupEntity.getId());
         jdbcTemplate.update(insertQuery, params);
     }
 

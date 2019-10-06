@@ -41,13 +41,13 @@ public class FactDaoImpl implements FactDao {
         final var query = "select f.id, f.datasource_id, f.date_id, f.stat_id, f.group_id, f.val_id, f.value from facts f " +
                 "join stats s on f.stat_id = s.id " +
                 "join dates d on f.date_id = d.id " +
-                "where s.type = :type and d.timestamp = (" +
+                "where s.name = :name and d.timestamp = (" +
                 "  select max(d1.timestamp) from facts f1 " +
                 "    join dates d1 on f1.date_id = d1.id " +
                 "  where f1.stat_id=f.stat_id and f1.datasource_id=f.datasource_id" +
                 ")";
         final var params = new HashMap<String, Object>();
-        params.put("type", type);
+        params.put("name", type);
         return jdbcTemplate.query(query, params, new FactRowMapper());
     }
 
@@ -56,11 +56,11 @@ public class FactDaoImpl implements FactDao {
         final var query = "select f.id, f.datasource_id, f.date_id, f.stat_id, f.group_id, f.val_id, f.value from facts f " +
                 "join stats s on f.stat_id = s.id " +
                 "join dates d on f.date_id = d.id " +
-                "where d.timestamp > :tsFrom and d.timestamp <= :tsTo and s.type = :type and f.datasource_id in (:datasources)";
+                "where d.timestamp > :tsFrom and d.timestamp <= :tsTo and s.name = :name and f.datasource_id in (:datasources)";
         final var params = new HashMap<String, Object>();
         params.put("tsFrom", tsFrom);
         params.put("tsTo", tsTo);
-        params.put("type", type);
+        params.put("name", type);
         params.put("datasources", datasourceIds);
         return jdbcTemplate.query(query, params, new FactRowMapper());
     }
