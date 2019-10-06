@@ -29,6 +29,14 @@ public class StatDaoImpl implements StatDao {
     }
 
     @Override
+    public Optional<StatEntity> getById(final Long id) {
+        final var query = "select id, name, system, postgres from stats where id = :id";
+        final var params = new HashMap<String, Object>();
+        params.put("id", id);
+        return Optional.ofNullable(DataAccessUtils.singleResult(jdbcTemplate.query(query, params, new StatRowMapper())));
+    }
+
+    @Override
     public Optional<StatEntity> getByName(final String name) {
         final var query = "select id, name, system, postgres from stats where name = :name";
         final var params = new HashMap<String, Object>();

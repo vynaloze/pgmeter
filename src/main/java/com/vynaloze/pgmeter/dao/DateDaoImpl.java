@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -24,6 +25,14 @@ public class DateDaoImpl implements DateDao {
         final var params = new HashMap<String, Object>();
         params.put("timestamp", dateEntity.getTimestamp());
         jdbcTemplate.update(insertQuery, params);
+    }
+
+    @Override
+    public Optional<DateEntity> getById(final Long id) {
+        final var query = "select id, timestamp from dates where id = :id";
+        final var params = new HashMap<String, Object>();
+        params.put("id", id);
+        return Optional.ofNullable(DataAccessUtils.singleResult(jdbcTemplate.query(query, params, new DateRowMapper())));
     }
 
     @Override

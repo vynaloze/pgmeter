@@ -8,7 +8,9 @@ import java.util.Optional;
 public interface DatasourceDao {
     void save(final DatasourceEntity datasourceEntity);
 
-    Optional<DatasourceEntity> getDatasource(final String ip, final String dbName);
+    Optional<DatasourceEntity> getById(final Long id);
 
-    List<DatasourceEntity> getDatasources(final Long tsFrom, final Long tsTo);
+    Optional<DatasourceEntity> getByIpAndDatabase(final String ip, final String dbName);
+
+    List<DatasourceEntity> getByTimestampBetween(final Long tsFrom, final Long tsTo);
 }

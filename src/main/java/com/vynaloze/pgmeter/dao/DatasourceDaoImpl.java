@@ -35,7 +35,16 @@ public class DatasourceDaoImpl implements DatasourceDao {
     }
 
     @Override
-    public Optional<DatasourceEntity> getDatasource(final String ip, final String database) {
+    public Optional<DatasourceEntity> getById(final Long id) {
+        final var query = "select id, ip, hostname, port, database, tags from datasources " +
+                "where id = :id";
+        final var params = new HashMap<String, Object>();
+        params.put("id", id);
+        return Optional.ofNullable(DataAccessUtils.singleResult(jdbcTemplate.query(query, params, new DatasourceRowMapper())));
+    }
+
+    @Override
+    public Optional<DatasourceEntity> getByIpAndDatabase(final String ip, final String database) {
         final var query = "select id, ip, hostname, port, database, tags from datasources " +
                 "where ip = :ip and database = :database";
         final var params = new HashMap<String, Object>();
@@ -45,7 +54,7 @@ public class DatasourceDaoImpl implements DatasourceDao {
     }
 
     @Override
-    public List<DatasourceEntity> getDatasources(final Long tsFrom, final Long tsTo) {
+    public List<DatasourceEntity> getByTimestampBetween(final Long tsFrom, final Long tsTo) {
         final var query = "select distinct d.id, d.ip, d.hostname, d.port, d.database, d.tags from facts f " +
                 "join datasources ds on f.datasource_id = ds.id " +
                 "join dates d on f.date_id = d.id " +
