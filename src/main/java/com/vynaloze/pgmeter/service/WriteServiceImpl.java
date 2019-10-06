@@ -17,30 +17,32 @@ public class WriteServiceImpl implements WriteService {
     private final GroupDao groupDao;
     private final ValDao valDao;
     private final FactDao factDao;
+    private final Mapper mapper;
 
     @Autowired
-    public WriteServiceImpl(final DatasourceDao datasourceDao, final DateDao dateDao, final StatDao statDao, final GroupDao groupDao, final ValDao valDao, final FactDao factDao) {
+    public WriteServiceImpl(final DatasourceDao datasourceDao, final DateDao dateDao, final StatDao statDao, final GroupDao groupDao, final ValDao valDao, final FactDao factDao, final Mapper mapper) {
         this.datasourceDao = datasourceDao;
         this.dateDao = dateDao;
         this.statDao = statDao;
         this.groupDao = groupDao;
         this.valDao = valDao;
         this.factDao = factDao;
+        this.mapper = mapper;
     }
 
     @Override
     public Stat save(final Stat stat) {
         final var datasourceEntity = new SynchronizedDataProvider<>(
-                () -> datasourceDao.getByIpAndDatabase(Mapper.toDatasourceEntity(stat).getIp(), Mapper.toDatasourceEntity(stat).getDatabase()),
-                () -> datasourceDao.save(Mapper.toDatasourceEntity(stat))
+                () -> datasourceDao.getByIpAndDatabase(mapper.toDatasourceEntity(stat).getIp(), mapper.toDatasourceEntity(stat).getDatabase()),
+                () -> datasourceDao.save(mapper.toDatasourceEntity(stat))
         ).get();
         final var dateEntity = new SynchronizedDataProvider<>(
                 () -> dateDao.getByTimestamp(stat.getTimestamp()),
-                () -> dateDao.save(Mapper.toDateEntity(stat))
+                () -> dateDao.save(mapper.toDateEntity(stat))
         ).get();
         final var statEntity = new SynchronizedDataProvider<>(
                 () -> statDao.getByName(stat.getId()),
-                () -> statDao.save(Mapper.toStatEntity(stat))
+                () -> statDao.save(mapper.toStatEntity(stat))
         ).get();
 
         stat.getPayload().forEach(group -> {
@@ -57,6 +59,6 @@ public class WriteServiceImpl implements WriteService {
                 factDao.save(fact);
             });
         });
-        return new Stat(stat, Mapper.toModelDatasource(datasourceEntity));
+        return new Stat(stat, mapper.toModelDatasource(datasourceEntity));
     }
 }
