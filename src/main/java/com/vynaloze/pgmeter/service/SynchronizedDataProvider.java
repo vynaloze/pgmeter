@@ -15,7 +15,7 @@ class SynchronizedDataProvider<T> {
     T get() {
         var readObj = this.reader.get();
         if (readObj.isEmpty()) {
-            synchronized (this) {
+            synchronized (SynchronizedDataProvider.class) {
                 readObj = this.reader.get();
                 if (readObj.isEmpty()) {
                     this.writer.run();

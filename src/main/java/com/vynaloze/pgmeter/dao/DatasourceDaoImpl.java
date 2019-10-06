@@ -55,7 +55,7 @@ public class DatasourceDaoImpl implements DatasourceDao {
 
     @Override
     public List<DatasourceEntity> getByTimestampBetween(final Long tsFrom, final Long tsTo) {
-        final var query = "select distinct d.id, d.ip, d.hostname, d.port, d.database, d.tags from facts f " +
+        final var query = "select distinct ds.id, ds.ip, ds.hostname, ds.port, ds.database, ds.tags from facts f " +
                 "join datasources ds on f.datasource_id = ds.id " +
                 "join dates d on f.date_id = d.id " +
                 "where d.timestamp > :tsFrom and d.timestamp <= :tsTo";

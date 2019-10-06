@@ -38,7 +38,8 @@ public class ReadServiceImpl implements ReadService {
 
     @Override
     public List<Stat> getMostRecentStats(final String type) {
-        return mapper.toModelStats(factDao.getMostRecent(type));
+        final var entities = factDao.getMostRecent(type);
+        return mapper.toModelStats(entities);
     }
 
     @Override

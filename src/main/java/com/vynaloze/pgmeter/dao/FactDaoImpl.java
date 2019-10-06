@@ -38,14 +38,20 @@ public class FactDaoImpl implements FactDao {
 
     @Override
     public List<FactEntity> getMostRecent(final String type) {
-        final var query = "select f.id, f.datasource_id, f.date_id, f.stat_id, f.group_id, f.val_id, f.value from facts f " +
-                "join stats s on f.stat_id = s.id " +
-                "join dates d on f.date_id = d.id " +
-                "where s.name = :name and d.timestamp = (" +
-                "  select max(d1.timestamp) from facts f1 " +
-                "    join dates d1 on f1.date_id = d1.id " +
-                "  where f1.stat_id=f.stat_id and f1.datasource_id=f.datasource_id" +
-                ")";
+        final var query = "select f.id, f.datasource_id, f.date_id, f.stat_id, f.group_id, f.val_id, f.value " +
+                "from ( " +
+                "         select d.id as date_id, m.datasource_id, m.stat_id " +
+                "         from ( " +
+                "                  select max(d.timestamp) as ts, f1.datasource_id, s.id as stat_id " +
+                "                  from facts f1 " +
+                "                           join stats s on f1.stat_id = s.id " +
+                "                           join dates d on f1.date_id = d.id " +
+                "                  where s.name = :name " +
+                "                  group by f1.datasource_id, s.id " +
+                "              ) m " +
+                "                  join dates d on d.timestamp = m.ts " +
+                "     ) i " +
+                "join facts f on f.date_id = i.date_id and f.datasource_id = i.datasource_id and f.stat_id = i.stat_id";
         final var params = new HashMap<String, Object>();
         params.put("name", type);
         return jdbcTemplate.query(query, params, new FactRowMapper());
