@@ -7,9 +7,7 @@ import com.vynaloze.pgmeter.model.translate.TranslateRequest;
 
 import java.util.List;
 
-public interface StatService {
-    Stat saveStat(final Stat stat);
-
+public interface ReadService {
     List<Datasource> getDatasources(final Long tsFrom, final Long tsTo);
 
     List<Stat> getMostRecentStats(final String type);
